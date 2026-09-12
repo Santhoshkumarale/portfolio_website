@@ -121,15 +121,9 @@
 }
 
 .states__title {
+  @include panel-label;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 0.45rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent);
 }
 
 .states__heading {
@@ -273,15 +267,8 @@
 }
 
 .vault__flow-title {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
+  @include panel-label;
   margin-bottom: 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent);
 }
 
 .vault__footnote {

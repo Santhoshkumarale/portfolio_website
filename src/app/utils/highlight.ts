@@ -99,7 +99,6 @@ const SQL_KEYWORDS = new Set([
   'SET',
   'DELETE',
   'CREATE',
-  'OR',
   'ALTER',
   'PROCEDURE',
   'FUNCTION',

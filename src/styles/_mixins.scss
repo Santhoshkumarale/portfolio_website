@@ -91,6 +91,18 @@ $breakpoints: (
   color: var(--accent);
 }
 
+// Small uppercase monospace label used as the title of diagrams and panels.
+@mixin panel-label($color: var(--accent)) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $color;
+}
+
 @mixin visually-hidden {
   position: absolute !important;
   width: 1px;

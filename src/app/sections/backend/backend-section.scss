@@ -14,15 +14,8 @@
 }
 
 .lifecycle__title {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
+  @include panel-label;
   margin-bottom: 1.25rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent);
 }
 
 .backend {
