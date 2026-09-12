@@ -5,10 +5,20 @@
     <div class="hero__content">
       <p class="hero__role" appReveal>
         <span class="hero__pulse" aria-hidden="true"></span>
-        {{ personal.role }}
+        <span>{{ personal.role }}</span>
+        @if (specialisation) {
+          <span class="hero__role-sep" aria-hidden="true"></span>
+          <span class="hero__specialisation">{{ specialisation }}</span>
+        }
       </p>
 
-      <h1 id="hero-title" appReveal [appRevealDelay]="60">{{ personal.headline }}</h1>
+      <h1 id="hero-title" appReveal [appRevealDelay]="60">
+        {{ headline.before }}
+        @if (headline.highlight) {
+          <span class="hero__highlight">{{ headline.highlight }}</span>
+        }
+        {{ headline.after }}
+      </h1>
 
       <p class="hero__supporting lead" appReveal [appRevealDelay]="120">
         {{ personal.supportingText }}
@@ -56,6 +66,10 @@
         <div class="stack__bar">
           <span class="stack__dots"><i></i><i></i><i></i></span>
           <span class="stack__title">enterprise-platform · request path</span>
+          <span class="stack__status">
+            <span class="stack__status-dot"></span>
+            HTTPS · JWT
+          </span>
         </div>
         <ol class="stack__layers">
           @for (layer of layers; track layer.name; let i = $index) {
@@ -63,14 +77,20 @@
               <span class="stack__icon"><app-icon [name]="layer.icon" [size]="16" /></span>
               <span class="stack__name">{{ layer.name }}</span>
               <span class="stack__tech">{{ layer.technology }}</span>
+              <span class="stack__index">0{{ i + 1 }}</span>
             </li>
           }
         </ol>
         <div class="stack__footer">
+          <span class="stack__footer-label">Safeguards</span>
           @for (item of safeguards; track item) {
             <app-chip tone="emerald">{{ item }}</app-chip>
           }
         </div>
+      </div>
+      <div class="hero__badge">
+        <app-icon name="clipboard" [size]="14" />
+        <span>Every access audited</span>
       </div>
       <div class="hero__glow"></div>
     </div>

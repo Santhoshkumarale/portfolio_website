@@ -25,8 +25,40 @@
   -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 20%, transparent 75%);
 }
 
+// Soft light sources: indigo top-right, sky bottom-left.
+.hero {
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+  }
+  &::before {
+    top: -10%;
+    right: -5%;
+    width: 42vw;
+    height: 42vw;
+    max-width: 640px;
+    max-height: 640px;
+    background: radial-gradient(circle, rgba(139, 156, 255, 0.22), transparent 65%);
+  }
+  &::after {
+    bottom: -20%;
+    left: -10%;
+    width: 36vw;
+    height: 36vw;
+    max-width: 520px;
+    max-height: 520px;
+    background: radial-gradient(circle, rgba(92, 200, 255, 0.12), transparent 65%);
+  }
+}
+
 .hero__inner {
   position: relative;
+  z-index: 1;
   display: grid;
   gap: 3.5rem;
   align-items: center;
@@ -51,6 +83,34 @@
 .hero__role {
   @include eyebrow;
   gap: 0.65rem;
+  flex-wrap: wrap;
+  row-gap: 0.35rem;
+}
+
+.hero__role-sep {
+  width: 1px;
+  height: 0.85rem;
+  background: var(--border-strong);
+
+  @include down('sm') {
+    display: none;
+  }
+}
+
+.hero__specialisation {
+  color: var(--text-2);
+  letter-spacing: 0.1em;
+}
+
+.hero__highlight {
+  background: linear-gradient(92deg, var(--accent-strong) 0%, var(--sky) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  white-space: nowrap;
+  // Keep descenders/ascenders inside the painted area.
+  padding-inline: 0.02em;
+  margin-inline: -0.02em;
 }
 
 .hero__pulse {
@@ -75,16 +135,19 @@
 }
 
 h1 {
-  max-width: 14ch;
-  font-size: clamp(2.5rem, 1.2rem + 3.6vw, 4.5rem);
+  max-width: 15ch;
+  font-size: clamp(2.25rem, 1rem + 3.8vw, 4.25rem);
 
   @include up('xl') {
-    font-size: var(--fs-hero);
+    font-size: clamp(3.5rem, 1rem + 3.4vw, 4.5rem);
   }
 }
 
 .hero__supporting {
-  max-width: 36rem;
+  max-width: 34rem;
+  position: relative;
+  padding-left: 1.1rem;
+  border-left: 2px solid var(--accent-border);
 }
 
 .hero__actions {
@@ -194,6 +257,36 @@ h1 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.stack__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  background: var(--emerald-soft);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  color: var(--emerald);
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  @include down('sm') {
+    display: none;
+  }
+}
+
+.stack__status-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.18);
 }
 
 .stack__layers {
@@ -204,6 +297,7 @@ h1 {
   gap: 0.5rem;
   position: relative;
 
+  // Vertical rail joining the layer icons.
   &::before {
     content: '';
     position: absolute;
@@ -213,21 +307,47 @@ h1 {
     width: 1px;
     background: linear-gradient(180deg, transparent, var(--accent-border), transparent);
   }
+
+  // A request "packet" travelling down the rail and a response coming back.
+  &::after {
+    content: '';
+    position: absolute;
+    top: 1.5rem;
+    left: calc(2.05rem - 3px);
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--sky);
+    box-shadow:
+      0 0 0 3px rgba(92, 200, 255, 0.2),
+      0 0 12px rgba(92, 200, 255, 0.7);
+    opacity: 0;
+
+    @include motion-safe {
+      animation: packet 5.5s ease-in-out infinite;
+      animation-delay: 1.2s;
+    }
+  }
 }
 
 .stack__layer {
   position: relative;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto 1fr auto;
   grid-template-areas:
-    'icon name'
-    'icon tech';
+    'icon name index'
+    'icon tech index';
   column-gap: 0.85rem;
   align-items: center;
   padding: 0.65rem 0.85rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
-  background: rgba(14, 17, 22, 0.75);
+  background: rgba(14, 17, 22, 0.8);
+  transition: border-color var(--dur) var(--ease-out);
+
+  &:hover {
+    border-color: var(--border-strong);
+  }
 
   @include motion-safe {
     animation: rise 0.7s var(--ease-out) both;
@@ -273,12 +393,66 @@ h1 {
   color: var(--text-2);
 }
 
+.stack__index {
+  grid-area: index;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--text-2);
+  opacity: 0.7;
+}
+
 .stack__footer {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 0.4rem;
   padding: 0.85rem 1rem 1rem;
   border-top: 1px solid var(--border);
+}
+
+.stack__footer-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin-right: 0.25rem;
+}
+
+// Floating badges anchored to the card corners (desktop only).
+.hero__badge {
+  position: absolute;
+  z-index: 2;
+  display: none;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: rgba(14, 17, 22, 0.92);
+  box-shadow: var(--shadow-md);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  color: var(--text-0);
+  white-space: nowrap;
+
+  bottom: -1rem;
+  left: -1.5rem;
+
+  app-icon {
+    color: var(--emerald);
+  }
+
+  @include up('lg') {
+    display: inline-flex;
+  }
+
+  @include motion-safe {
+    animation: float 10s ease-in-out infinite;
+    animation-delay: -3s;
+  }
 }
 
 .hero__scroll {
@@ -338,6 +512,44 @@ h1 {
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+// Down the rail (request), pause, then back up (response) in a different colour.
+@keyframes packet {
+  0% {
+    top: 1.5rem;
+    opacity: 0;
+    background: var(--sky);
+  }
+  6% {
+    opacity: 1;
+  }
+  42% {
+    top: calc(100% - 1.5rem);
+    opacity: 1;
+    background: var(--sky);
+  }
+  50% {
+    top: calc(100% - 1.5rem);
+    opacity: 1;
+    background: var(--emerald);
+    box-shadow:
+      0 0 0 3px rgba(74, 222, 128, 0.2),
+      0 0 12px rgba(74, 222, 128, 0.7);
+  }
+  86% {
+    top: 1.5rem;
+    opacity: 1;
+    background: var(--emerald);
+    box-shadow:
+      0 0 0 3px rgba(74, 222, 128, 0.2),
+      0 0 12px rgba(74, 222, 128, 0.7);
+  }
+  92%,
+  100% {
+    top: 1.5rem;
+    opacity: 0;
   }
 }
 
