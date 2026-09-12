@@ -13,5 +13,6 @@ export class SiteFooter {
   protected readonly personal = portfolioData.personal;
   protected readonly nav = portfolioData.nav;
   protected readonly social = portfolioData.social;
+  protected readonly resume = portfolioData.sections.resume;
   protected readonly year = new Date().getFullYear();
 }
