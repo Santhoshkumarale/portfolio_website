@@ -1,0 +1,50 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <p class="footer__name">{{ personal.name }}</p>
+        <p class="footer__positioning">{{ personal.positioning }}</p>
+      </div>
+
+      <nav class="footer__nav" aria-label="Footer">
+        <ul role="list">
+          @for (item of nav; track item.id) {
+            <li>
+              <a [href]="'#' + item.id">{{ item.label }}</a>
+            </li>
+          }
+          <li>
+            <a [href]="'#' + resume.id">{{ resume.eyebrow }}</a>
+          </li>
+        </ul>
+      </nav>
+
+      <ul class="footer__social" role="list" aria-label="Social profiles">
+        @for (link of social; track link.label) {
+          <li>
+            <a
+              [href]="link.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              [attr.aria-label]="link.label + ' profile (opens in a new tab)'"
+            >
+              <app-icon [name]="link.icon" [size]="18" />
+              <span>{{ link.label }}</span>
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <div class="footer__bottom">
+      <p>&copy; {{ year }} {{ personal.name }}. All rights reserved.</p>
+      <p class="footer__built">
+        Built with Angular &middot; Designed for accessibility and performance
+      </p>
+      <a class="footer__top-link" href="#top">
+        <span>Back to top</span>
+        <app-icon name="arrow-up" [size]="16" />
+      </a>
+    </div>
+  </div>
+</footer>

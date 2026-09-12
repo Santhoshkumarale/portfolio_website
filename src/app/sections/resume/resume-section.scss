@@ -1,0 +1,122 @@
+@use 'mixins' as *;
+
+:host {
+  display: block;
+}
+
+.resume {
+  @include glass(var(--radius-lg));
+  display: grid;
+  gap: 2rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  overflow: hidden;
+  background:
+    radial-gradient(700px 300px at 100% 0%, rgba(139, 156, 255, 0.12), transparent 70%),
+    rgba(9, 11, 15, 0.5);
+
+  @include up('md') {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    align-items: center;
+  }
+}
+
+.resume__description {
+  max-width: 34rem;
+  color: var(--text-1);
+  line-height: var(--lh-relaxed);
+}
+
+.resume__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+
+  @include down('sm') {
+    app-button {
+      flex: 1 1 100%;
+    }
+  }
+}
+
+.resume__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-2);
+}
+
+// Stylised document -----------------------------------------------------------
+
+.document {
+  position: relative;
+  width: min(14rem, 100%);
+  aspect-ratio: 3 / 4;
+  margin-inline: auto;
+
+  @include up('md') {
+    justify-self: end;
+  }
+}
+
+.document__page {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1.5rem 1.25rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  box-shadow: var(--shadow-lg);
+
+  &--back {
+    z-index: -1;
+    transform: translate(0.75rem, 0.75rem) rotate(2deg);
+    opacity: 0.6;
+  }
+
+  @include motion-safe {
+    transition: transform var(--dur-slow) var(--ease-out);
+
+    .resume:hover & {
+      transform: translateY(-4px);
+
+      &.document__page--back {
+        transform: translate(0.9rem, 0.65rem) rotate(3deg);
+      }
+    }
+  }
+}
+
+.document__line {
+  display: block;
+  height: 0.4rem;
+  width: 100%;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+
+  &--title {
+    height: 0.7rem;
+    width: 60%;
+    background: var(--accent);
+    opacity: 0.85;
+  }
+
+  &--sub {
+    width: 40%;
+    background: rgba(139, 156, 255, 0.45);
+  }
+
+  &--short {
+    width: 70%;
+  }
+}
+
+.document__gap {
+  height: 0.35rem;
+}

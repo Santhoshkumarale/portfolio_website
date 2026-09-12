@@ -1,0 +1,106 @@
+<section id="architecture" class="section section--alt" aria-labelledby="architecture-title">
+  <div class="container">
+    <app-section-heading
+      headingId="architecture-title"
+      [number]="meta.number"
+      [eyebrow]="meta.eyebrow"
+      [title]="meta.title"
+      [description]="meta.description"
+    />
+
+    <div class="diagram" appReveal>
+      <div class="diagram__toolbar" aria-hidden="true">
+        <span class="diagram__file">enterprise-platform · layered architecture</span>
+        <ul class="legend" role="list">
+          <li><i class="legend__swatch" data-tone="sky"></i>Client &amp; storage</li>
+          <li><i class="legend__swatch" data-tone="accent"></i>API boundary</li>
+          <li><i class="legend__swatch" data-tone="neutral"></i>Application core</li>
+        </ul>
+      </div>
+
+      <div class="diagram__grid">
+        <div class="rail rail--request" aria-hidden="true">
+          <span class="rail__label">Request</span>
+          <span class="rail__line"></span>
+          <app-icon name="arrow-down" [size]="14" />
+        </div>
+
+        <ol class="layers" role="list" aria-label="Application layers, top to bottom">
+          @for (layer of architecture.layers; track layer.name; let i = $index; let last = $last) {
+            <li class="layer" [attr.data-tone]="layer.tone" [style.--i]="i">
+              <span class="layer__index" aria-hidden="true">L{{ i + 1 }}</span>
+              <span class="layer__icon" aria-hidden="true">
+                <app-icon [name]="layer.icon" [size]="20" />
+              </span>
+              <div class="layer__text">
+                <span class="layer__name">{{ layer.name }}</span>
+                <span class="layer__tech">{{ layer.technology }}</span>
+                <span class="layer__description">{{ layer.description }}</span>
+                <ul
+                  class="layer__parts"
+                  role="list"
+                  [attr.aria-label]="layer.name + ' building blocks'"
+                >
+                  @for (part of layer.responsibilities; track part) {
+                    <li>{{ part }}</li>
+                  }
+                </ul>
+              </div>
+              @if (!last) {
+                <span class="layer__connector" aria-hidden="true">
+                  <app-icon name="arrow-down" [size]="14" />
+                </span>
+              }
+            </li>
+          }
+        </ol>
+
+        <div class="rail rail--response" aria-hidden="true">
+          <app-icon name="arrow-up" [size]="14" />
+          <span class="rail__line"></span>
+          <span class="rail__label">Response</span>
+        </div>
+
+        <aside class="cross" aria-labelledby="cross-cutting-title">
+          <p id="cross-cutting-title" class="cross__title">Cross-cutting</p>
+          <ul class="cross__list" role="list">
+            @for (concern of architecture.crossCutting; track concern) {
+              <li>
+                <span class="cross__tick" aria-hidden="true"></span>
+                <span>{{ concern }}</span>
+              </li>
+            }
+          </ul>
+          <p class="cross__note">
+            Configured once in the pipeline and dependency container; applied to every layer on the
+            left.
+          </p>
+        </aside>
+      </div>
+    </div>
+
+    <ul class="concepts grid grid--3" role="list" aria-label="Architecture concepts">
+      @for (concept of architecture.concepts; track concept.title; let i = $index) {
+        <li appReveal [appRevealDelay]="(i % 3) * 70">
+          <app-feature-card
+            [icon]="concept.icon"
+            [title]="concept.title"
+            [description]="concept.description"
+          />
+        </li>
+      }
+    </ul>
+
+    <div class="principles" appReveal>
+      <p class="principles__title">
+        <app-icon name="layers" [size]="16" />
+        Working principles
+      </p>
+      <ul class="principles__list" role="list">
+        @for (principle of architecture.principles; track principle) {
+          <li>{{ principle }}</li>
+        }
+      </ul>
+    </div>
+  </div>
+</section>

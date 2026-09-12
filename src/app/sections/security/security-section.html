@@ -1,0 +1,99 @@
+<section id="security" class="section" aria-labelledby="security-title">
+  <div class="container">
+    <app-section-heading
+      headingId="security-title"
+      [number]="meta.number"
+      [eyebrow]="meta.eyebrow"
+      [title]="meta.title"
+      [description]="meta.description"
+    />
+
+    <ul class="controls" role="list" aria-label="Security controls">
+      @for (control of security.controls; track control.title; let i = $index) {
+        <li appReveal [appRevealDelay]="(i % 4) * 60">
+          <app-feature-card
+            [icon]="control.icon"
+            [title]="control.title"
+            [description]="control.description"
+            [tags]="control.tags ?? []"
+            [tone]="control.tone ?? 'neutral'"
+          >
+            <app-security-visual cardVisual [kind]="control.visual" />
+          </app-feature-card>
+        </li>
+      }
+    </ul>
+
+    <div class="vault" appReveal>
+      <div class="vault__header">
+        <div>
+          <p class="eyebrow">Field-level encryption</p>
+          <h3 class="vault__title">AES-256-GCM: authenticated encryption at rest</h3>
+          <p class="vault__intro">
+            Sensitive fields are encrypted before they reach the database and only decrypted for
+            authorized callers. Because GCM is an authenticated mode, any modification to the stored
+            ciphertext is detected and rejected on read.
+          </p>
+        </div>
+        <dl class="facts">
+          @for (fact of security.encryptionFacts; track fact.label) {
+            <div class="facts__item">
+              <dt>{{ fact.label }}</dt>
+              <dd>{{ fact.value }}</dd>
+            </div>
+          }
+        </dl>
+      </div>
+
+      <div class="states" role="group" aria-labelledby="states-title">
+        <p id="states-title" class="states__title">
+          <span class="states__heading">
+            <app-icon name="eye-off" [size]="14" />
+            One field, three representations
+          </span>
+          <span class="states__note">illustrative values</span>
+        </p>
+        <ol class="states__list" role="list">
+          @for (state of security.valueStates; track state.label; let last = $last) {
+            <li class="state" [attr.data-tone]="state.tone">
+              <span class="state__icon" aria-hidden="true">
+                <app-icon [name]="state.icon" [size]="16" />
+              </span>
+              <span class="state__label">{{ state.label }}</span>
+              <code class="state__sample">{{ state.sample }}</code>
+              <span class="state__context">{{ state.context }}</span>
+              @if (!last) {
+                <span class="state__arrow" aria-hidden="true">
+                  <app-icon name="arrow-right" [size]="14" />
+                </span>
+              }
+            </li>
+          }
+        </ol>
+      </div>
+
+      <div class="vault__flows">
+        <div class="vault__flow">
+          <p class="vault__flow-title">
+            <app-icon name="lock" [size]="15" />
+            Storing a value
+          </p>
+          <app-flow-diagram [steps]="security.encryptFlow" label="Encryption flow" />
+        </div>
+        <div class="vault__flow">
+          <p class="vault__flow-title">
+            <app-icon name="key" [size]="15" />
+            Reading a value
+          </p>
+          <app-flow-diagram [steps]="security.decryptFlow" label="Decryption flow" />
+        </div>
+      </div>
+
+      <p class="vault__footnote">
+        <app-icon name="shield-check" [size]="14" />
+        Keys, nonces and tokens shown in this portfolio are conceptual — no real secrets are ever
+        embedded in client code.
+      </p>
+    </div>
+  </div>
+</section>

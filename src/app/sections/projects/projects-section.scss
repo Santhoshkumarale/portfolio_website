@@ -1,0 +1,252 @@
+@use 'mixins' as *;
+
+:host {
+  display: block;
+}
+
+.projects {
+  display: grid;
+  gap: 2rem;
+}
+
+.project {
+  @include glass(var(--radius-lg));
+  @include card-hover;
+  display: grid;
+  gap: 2rem;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-border), transparent);
+  }
+
+  @include up('lg') {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 3rem;
+    align-items: stretch;
+
+    &--reverse .project__content {
+      order: 2;
+    }
+    &--reverse .project__visual {
+      order: 1;
+    }
+  }
+}
+
+.project__content {
+  display: grid;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.project__header {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.project__category {
+  @include eyebrow;
+  gap: 0.75rem;
+}
+
+.project__index {
+  display: inline-grid;
+  place-items: center;
+  min-width: 2rem;
+  height: 1.5rem;
+  padding-inline: 0.45rem;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border-strong);
+  background: var(--surface-strong);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text-0);
+}
+
+.project__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+// Problem → Solution → Technology → Contribution -----------------------------
+
+.brief {
+  display: grid;
+  gap: 1rem;
+
+  @include up('sm') {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.brief__item {
+  --brief-color: var(--text-2);
+  --brief-bg: transparent;
+  --brief-border: var(--border);
+  display: grid;
+  gap: 0.6rem;
+  align-content: start;
+  min-width: 0;
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--brief-border);
+  background: var(--brief-bg);
+
+  &--problem {
+    --brief-color: var(--amber);
+    --brief-bg: linear-gradient(180deg, rgba(251, 191, 119, 0.06), transparent);
+    --brief-border: rgba(251, 191, 119, 0.22);
+  }
+  &--solution {
+    --brief-color: var(--emerald);
+    --brief-bg: linear-gradient(180deg, rgba(74, 222, 128, 0.06), transparent);
+    --brief-border: rgba(74, 222, 128, 0.22);
+  }
+  &--tech {
+    --brief-color: var(--accent);
+    padding: 0;
+    border: 0;
+  }
+  &--contribution {
+    --brief-color: var(--sky);
+    padding: 0;
+    border: 0;
+  }
+}
+
+.brief__label {
+  @include panel-label(var(--brief-color));
+  font-weight: 500;
+}
+
+.brief__text {
+  font-size: var(--fs-sm);
+  line-height: 1.65;
+  color: var(--text-1);
+}
+
+.project__tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.project__contribution {
+  display: grid;
+  gap: 0.55rem;
+
+  @include up('md') {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem 1.25rem;
+  }
+
+  li {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+    font-size: var(--fs-sm);
+    line-height: 1.55;
+    color: var(--text-1);
+  }
+}
+
+.project__bullet {
+  flex-shrink: 0;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-top: 0.5rem;
+  border-radius: 2px;
+  background: var(--sky);
+  box-shadow: 0 0 0 3px rgba(92, 200, 255, 0.15);
+}
+
+// Visual panel --------------------------------------------------------------
+
+.project__visual {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding: 1.25rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    radial-gradient(600px 240px at 80% 0%, rgba(139, 156, 255, 0.1), transparent 70%),
+    rgba(9, 11, 15, 0.55);
+  background-size:
+    32px 32px,
+    32px 32px,
+    auto,
+    auto;
+}
+
+.visual__title {
+  @include panel-label(var(--text-2));
+  margin-bottom: 1rem;
+}
+
+.modules {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+
+  @include up('sm') {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  @include up('lg') {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+}
+
+.modules__item {
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.9rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-0);
+  transition: border-color var(--dur-fast) var(--ease-out);
+
+  &:hover {
+    border-color: var(--accent-border);
+  }
+}
+
+.modules__icon {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-xs);
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
+.pipeline {
+  display: grid;
+  gap: 1.25rem;
+
+  @include up('sm') {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.pipeline__label {
+  @include panel-label;
+  margin-bottom: 0.65rem;
+}

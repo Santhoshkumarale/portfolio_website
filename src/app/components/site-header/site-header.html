@@ -1,0 +1,77 @@
+<header class="header" [class.header--scrolled]="scrolled()" [class.header--open]="menuOpen()">
+  <div class="container header__inner">
+    <a class="brand" href="#top" aria-label="Back to top">
+      <span class="brand__mark" aria-hidden="true">
+        <app-icon name="terminal" [size]="16" />
+      </span>
+      <span class="brand__text">
+        <span class="brand__name">{{ personal.name }}</span>
+        <span class="brand__role">{{ personal.role }}</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <ul class="nav__list" role="list">
+        @for (item of nav; track item.id) {
+          <li>
+            <a
+              class="nav__link"
+              [href]="'#' + item.id"
+              [class.nav__link--active]="activeId() === item.id"
+              [attr.aria-current]="activeId() === item.id ? 'location' : null"
+            >
+              {{ item.label }}
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+
+    <div class="header__actions">
+      <app-button variant="secondary" href="#contact" icon="mail">Contact Me</app-button>
+    </div>
+
+    <button
+      #toggleButton
+      type="button"
+      class="menu-toggle"
+      [attr.aria-expanded]="menuOpen()"
+      aria-controls="mobile-nav"
+      [attr.aria-label]="menuOpen() ? 'Close navigation menu' : 'Open navigation menu'"
+      (click)="toggleMenu()"
+    >
+      <app-icon [name]="menuOpen() ? 'x' : 'menu'" [size]="22" />
+    </button>
+  </div>
+
+  <span
+    class="header__progress"
+    aria-hidden="true"
+    [style.transform]="'scaleX(' + progress() + ')'"
+  ></span>
+
+  @if (menuOpen()) {
+    <div #mobilePanel id="mobile-nav" class="mobile">
+      <nav aria-label="Mobile">
+        <ul class="mobile__list" role="list">
+          @for (item of nav; track item.id) {
+            <li>
+              <a
+                class="mobile__link"
+                [href]="'#' + item.id"
+                [class.mobile__link--active]="activeId() === item.id"
+                [attr.aria-current]="activeId() === item.id ? 'location' : null"
+              >
+                <span>{{ item.label }}</span>
+                <app-icon name="arrow-right" [size]="16" />
+              </a>
+            </li>
+          }
+        </ul>
+      </nav>
+      <div class="mobile__footer">
+        <app-button href="#contact" icon="mail">Contact Me</app-button>
+      </div>
+    </div>
+  }
+</header>

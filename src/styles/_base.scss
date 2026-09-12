@@ -1,0 +1,203 @@
+@use 'mixins' as *;
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  color: var(--text-1);
+  background-color: var(--bg-0);
+  background-image:
+    radial-gradient(1200px 600px at 80% -10%, rgba(139, 156, 255, 0.09), transparent 60%),
+    radial-gradient(900px 500px at -10% 20%, rgba(92, 200, 255, 0.06), transparent 60%);
+  background-repeat: no-repeat;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--text-0);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: var(--lh-snug);
+  text-wrap: balance;
+}
+
+h1,
+h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+h1 {
+  font-size: var(--fs-hero);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+h2 {
+  font-size: var(--fs-2xl);
+  line-height: 1.12;
+}
+
+h3 {
+  font-size: var(--fs-lg);
+}
+
+p {
+  text-wrap: pretty;
+}
+
+code,
+kbd,
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+// Layout primitives -------------------------------------------------------
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.container--narrow {
+  max-width: var(--container-narrow);
+}
+
+.section {
+  position: relative;
+  padding-block: var(--section-y);
+
+  // Hairline that marks the transition between sections without a hard edge.
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: min(100% - 2 * var(--gutter), var(--container));
+    height: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--border-strong) 30%,
+      var(--border-strong) 70%,
+      transparent
+    );
+    pointer-events: none;
+  }
+}
+
+.section--alt {
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.018) 45%, transparent);
+}
+
+.section__divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+}
+
+.grid--2 {
+  @include up('md') {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.grid--3 {
+  @include up('md') {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @include up('lg') {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.grid--4 {
+  @include up('sm') {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @include up('lg') {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.visually-hidden {
+  @include visually-hidden;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 1000;
+  padding: 0.6rem 1rem;
+  background: var(--accent);
+  color: var(--text-inverse);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  transform: translateY(-200%);
+  transition: transform var(--dur-fast) var(--ease-out);
+
+  &:focus-visible {
+    transform: translateY(0);
+    outline-color: var(--text-0);
+  }
+}
+
+// Scroll reveal ------------------------------------------------------------
+// Only hides content when JS is running (html.js) so prerendered HTML and
+// no-JS visitors always see everything.
+
+html.js .reveal {
+  @include motion-safe {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity var(--dur-slow) var(--ease-out),
+      transform var(--dur-slow) var(--ease-out);
+    transition-delay: var(--reveal-delay, 0ms);
+
+    &.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+// Shared micro-patterns ----------------------------------------------------
+
+.eyebrow {
+  @include eyebrow;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 1.25rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+.lead {
+  font-size: var(--fs-lg);
+  line-height: var(--lh-relaxed);
+  color: var(--text-1);
+}
+
+.muted {
+  color: var(--text-2);
+}
+
+.mono {
+  font-family: var(--font-mono);
+}

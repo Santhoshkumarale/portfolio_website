@@ -1,0 +1,69 @@
+<section id="experience" class="section section--alt" aria-labelledby="experience-title">
+  <div class="container">
+    <app-section-heading
+      headingId="experience-title"
+      [number]="meta.number"
+      [eyebrow]="meta.eyebrow"
+      [title]="meta.title"
+      [description]="meta.description"
+    />
+
+    <ol class="timeline" role="list">
+      @for (entry of entries; track entry.company + entry.title; let i = $index) {
+        <li class="timeline__item" appReveal [appRevealDelay]="i * 80">
+          <div class="timeline__marker" aria-hidden="true">
+            <app-icon name="briefcase" [size]="16" />
+          </div>
+
+          <article class="entry">
+            <header class="entry__header">
+              <div>
+                <h3 class="entry__title">{{ entry.title }}</h3>
+                <p class="entry__company">
+                  <app-icon name="building" [size]="15" />
+                  <span>{{ entry.company }}</span>
+                  @if (entry.location) {
+                    <span class="entry__sep" aria-hidden="true">·</span>
+                    <span>{{ entry.location }}</span>
+                  }
+                </p>
+              </div>
+              <p class="entry__dates">
+                <span>{{ entry.start }}</span>
+                <span aria-hidden="true">—</span>
+                <span class="visually-hidden">to</span>
+                <span>{{ entry.end }}</span>
+              </p>
+            </header>
+
+            <p class="entry__summary">{{ entry.summary }}</p>
+
+            <div class="entry__groups">
+              @for (group of entry.responsibilities; track group.title) {
+                <div class="group">
+                  <h4 class="group__title">{{ group.title }}</h4>
+                  <ul class="group__list" role="list">
+                    @for (item of group.items; track item) {
+                      <li>
+                        <app-icon name="check" [size]="14" />
+                        <span>{{ item }}</span>
+                      </li>
+                    }
+                  </ul>
+                </div>
+              }
+            </div>
+
+            <ul class="entry__tech" role="list" aria-label="Technologies used">
+              @for (tech of entry.technologies; track tech) {
+                <li>
+                  <app-chip>{{ tech }}</app-chip>
+                </li>
+              }
+            </ul>
+          </article>
+        </li>
+      }
+    </ol>
+  </div>
+</section>

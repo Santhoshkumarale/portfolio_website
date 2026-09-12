@@ -1,0 +1,99 @@
+@use 'mixins' as *;
+
+:host {
+  display: block;
+}
+
+.footer {
+  border-top: 1px solid var(--border);
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.35));
+  padding-block: 3rem 2rem;
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+}
+
+.footer__top {
+  display: grid;
+  gap: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+
+  @include up('md') {
+    grid-template-columns: 1.4fr 1fr auto;
+    align-items: start;
+  }
+}
+
+.footer__name {
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.footer__positioning {
+  margin-top: 0.25rem;
+  max-width: 28rem;
+}
+
+.footer__nav ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem 1.5rem;
+
+  a {
+    color: var(--text-2);
+    transition: color var(--dur-fast) var(--ease-out);
+
+    &:hover {
+      color: var(--text-0);
+    }
+  }
+}
+
+.footer__social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.85rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-1);
+    transition:
+      border-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out);
+
+    &:hover {
+      color: var(--text-0);
+      border-color: var(--border-strong);
+    }
+  }
+}
+
+.footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  padding-top: 1.5rem;
+  font-size: var(--fs-xs);
+}
+
+.footer__built {
+  flex: 1 1 auto;
+}
+
+.footer__top-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-1);
+
+  &:hover {
+    color: var(--text-0);
+  }
+}

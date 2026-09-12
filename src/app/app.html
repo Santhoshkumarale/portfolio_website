@@ -1,0 +1,46 @@
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<app-icon-sprite />
+
+<div id="top" class="page">
+  <app-site-header />
+
+  <main id="main-content" tabindex="-1">
+    <app-hero-section />
+    <app-about-section />
+    <app-experience-section />
+    <app-projects-section />
+
+    <!--
+      Below-the-fold sections are prerendered into the HTML like everything
+      else, but their JavaScript is split into separate chunks that only load
+      and hydrate when the section scrolls into view (incremental hydration).
+    -->
+    @defer (on immediate; hydrate on viewport) {
+      <app-architecture-section />
+    }
+    @defer (on immediate; hydrate on viewport) {
+      <app-security-section />
+    }
+    @defer (on immediate; hydrate on viewport) {
+      <app-backend-section />
+    }
+    @defer (on immediate; hydrate on viewport) {
+      <app-database-section />
+    }
+    @defer (on immediate; hydrate on viewport) {
+      <app-journey-section />
+    }
+    @defer (on immediate; hydrate on viewport) {
+      <app-github-section />
+    }
+    @defer (on immediate; hydrate on viewport) {
+      <app-resume-section />
+    }
+    <!-- The form must be interactive before it can be reached, so hydrate as soon as the browser is idle. -->
+    @defer (on immediate; hydrate on idle) {
+      <app-contact-section />
+    }
+  </main>
+
+  <app-site-footer />
+</div>

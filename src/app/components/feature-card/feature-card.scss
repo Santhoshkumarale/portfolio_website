@@ -1,0 +1,116 @@
+@use 'mixins' as *;
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.card {
+  @include glass;
+  @include card-hover;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  height: 100%;
+  padding: 1.5rem;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--card-accent, var(--border-strong)),
+      transparent
+    );
+    opacity: 0.8;
+    transition: opacity var(--dur) var(--ease-out);
+  }
+
+  // Soft light in the top-left corner that strengthens on hover.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      360px 180px at 0% 0%,
+      color-mix(in srgb, var(--card-accent, var(--accent)) 12%, transparent),
+      transparent 70%
+    );
+    opacity: 0.6;
+    transition: opacity var(--dur) var(--ease-out);
+    pointer-events: none;
+  }
+
+  &:hover {
+    &::before {
+      opacity: 1;
+    }
+    &::after {
+      opacity: 1;
+    }
+    .card__icon {
+      border-color: var(--card-accent, var(--border-strong));
+    }
+  }
+
+  > * {
+    position: relative;
+  }
+
+  &[data-tone='accent'] {
+    --card-accent: var(--accent);
+    --card-icon-bg: var(--accent-soft);
+    --card-icon-fg: var(--accent-strong);
+  }
+  &[data-tone='sky'] {
+    --card-accent: var(--sky);
+    --card-icon-bg: var(--sky-soft);
+    --card-icon-fg: var(--sky);
+  }
+  &[data-tone='emerald'] {
+    --card-accent: var(--emerald);
+    --card-icon-bg: var(--emerald-soft);
+    --card-icon-fg: var(--emerald);
+  }
+  &[data-tone='amber'] {
+    --card-accent: var(--amber);
+    --card-icon-bg: var(--amber-soft);
+    --card-icon-fg: var(--amber);
+  }
+}
+
+.card__icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--card-icon-bg, var(--surface-strong));
+  color: var(--card-icon-fg, var(--accent));
+  border: 1px solid var(--border);
+  transition: border-color var(--dur) var(--ease-out);
+}
+
+.card__title {
+  font-size: var(--fs-md);
+  font-weight: 600;
+}
+
+.card__description {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--text-2);
+  flex: 1;
+}
+
+.card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+}

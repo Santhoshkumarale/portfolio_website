@@ -1,0 +1,35 @@
+@if (href(); as url) {
+  <a
+    [class]="'btn btn--' + variant()"
+    [attr.href]="url"
+    [attr.target]="external() ? '_blank' : null"
+    [attr.rel]="external() ? 'noopener noreferrer' : null"
+    [attr.download]="downloadAttr()"
+    [attr.aria-label]="ariaLabel()"
+  >
+    <ng-container *ngTemplateOutlet="content" />
+  </a>
+} @else {
+  <button
+    [class]="'btn btn--' + variant()"
+    [type]="type()"
+    [disabled]="disabled()"
+    [attr.aria-label]="ariaLabel()"
+  >
+    <ng-container *ngTemplateOutlet="content" />
+  </button>
+}
+
+<ng-template #content>
+  @if (icon(); as name) {
+    @if (iconPosition() === 'start') {
+      <app-icon [name]="name" [size]="18" />
+    }
+  }
+  <span class="btn__label"><ng-content /></span>
+  @if (icon(); as name) {
+    @if (iconPosition() === 'end') {
+      <app-icon [name]="name" [size]="18" />
+    }
+  }
+</ng-template>

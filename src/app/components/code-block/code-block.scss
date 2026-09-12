@@ -1,0 +1,101 @@
+@use 'mixins' as *;
+
+:host {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.code {
+  @include glass(var(--radius));
+  overflow: hidden;
+  // Long code lines must never dictate layout width; the <pre> scrolls instead.
+  contain: inline-size;
+  background: linear-gradient(180deg, rgba(10, 12, 17, 0.85), rgba(10, 12, 17, 0.7));
+}
+
+.code__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.code__dots {
+  display: inline-flex;
+  gap: 0.35rem;
+
+  i {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--border-strong);
+  }
+}
+
+.code__title {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.code__lang {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.code__pre {
+  margin: 0;
+  padding: 1.1rem 1.15rem 1.25rem;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  line-height: 1.65;
+  color: var(--text-1);
+  tab-size: 4;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+
+  &:focus-visible {
+    outline-offset: -3px;
+  }
+}
+
+.code__caption {
+  padding: 0.85rem 1.1rem;
+  border-top: 1px solid var(--border);
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.tok--keyword {
+  color: #c4b5fd;
+}
+.tok--type {
+  color: #7dd3fc;
+}
+.tok--string {
+  color: #a7f3d0;
+}
+.tok--comment {
+  color: var(--text-2);
+  font-style: italic;
+}
+.tok--number {
+  color: #fcd9a6;
+}
+.tok--attribute {
+  color: #fbbf77;
+}
+.tok--variable {
+  color: #e2e8f0;
+}
