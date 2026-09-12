@@ -2,6 +2,7 @@
   <div class="container">
     <app-section-heading
       headingId="security-title"
+      [number]="meta.number"
       [eyebrow]="meta.eyebrow"
       [title]="meta.title"
       [description]="meta.description"
@@ -16,7 +17,9 @@
             [description]="control.description"
             [tags]="control.tags ?? []"
             [tone]="control.tone ?? 'neutral'"
-          />
+          >
+            <app-security-visual cardVisual [kind]="control.visual" />
+          </app-feature-card>
         </li>
       }
     </ul>
@@ -40,6 +43,33 @@
             </div>
           }
         </dl>
+      </div>
+
+      <div class="states" role="group" aria-labelledby="states-title">
+        <p id="states-title" class="states__title">
+          <span class="states__heading">
+            <app-icon name="eye-off" [size]="14" />
+            One field, three representations
+          </span>
+          <span class="states__note">illustrative values</span>
+        </p>
+        <ol class="states__list" role="list">
+          @for (state of security.valueStates; track state.label; let last = $last) {
+            <li class="state" [attr.data-tone]="state.tone">
+              <span class="state__icon" aria-hidden="true">
+                <app-icon [name]="state.icon" [size]="16" />
+              </span>
+              <span class="state__label">{{ state.label }}</span>
+              <code class="state__sample">{{ state.sample }}</code>
+              <span class="state__context">{{ state.context }}</span>
+              @if (!last) {
+                <span class="state__arrow" aria-hidden="true">
+                  <app-icon name="arrow-right" [size]="14" />
+                </span>
+              }
+            </li>
+          }
+        </ol>
       </div>
 
       <div class="vault__flows">

@@ -12,11 +12,16 @@
   @include up('md') {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  // Seven cards as 3 + 3 + 1: half-width tracks let the last card sit centred.
   @include up('lg') {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  @include up('xl') {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+
+    > li {
+      grid-column: span 2;
+    }
+    > li:nth-child(7) {
+      grid-column: 3 / span 2;
+    }
   }
 }
 
@@ -101,6 +106,152 @@
     dd {
       text-align: left;
     }
+  }
+}
+
+// One field, three representations ------------------------------------------
+
+.states {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1.1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.states__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.states__heading {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.states__note {
+  margin-left: auto;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+}
+
+.states__list {
+  display: grid;
+  gap: 1.75rem;
+
+  @include up('md') {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
+
+.state {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    'icon label'
+    'sample sample'
+    'context context';
+  column-gap: 0.65rem;
+  row-gap: 0.4rem;
+  align-items: center;
+  padding: 0.9rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--state-border, var(--border));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+
+  &[data-tone='emerald'] {
+    --state-color: var(--emerald);
+    --state-soft: var(--emerald-soft);
+    --state-border: rgba(74, 222, 128, 0.3);
+  }
+  &[data-tone='sky'] {
+    --state-color: var(--sky);
+    --state-soft: var(--sky-soft);
+    --state-border: rgba(92, 200, 255, 0.3);
+  }
+  &[data-tone='amber'] {
+    --state-color: var(--amber);
+    --state-soft: var(--amber-soft);
+    --state-border: rgba(251, 191, 119, 0.3);
+  }
+}
+
+.state__icon {
+  grid-area: icon;
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: var(--radius-xs);
+  background: var(--state-soft, var(--surface-strong));
+  color: var(--state-color, var(--text-1));
+}
+
+.state__label {
+  grid-area: label;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.state__sample {
+  grid-area: sample;
+  display: block;
+  padding: 0.5rem 0.65rem;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border);
+  background: rgba(9, 11, 15, 0.6);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: var(--state-color, var(--text-0));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.state__context {
+  grid-area: context;
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.state__arrow {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-1);
+  color: var(--text-2);
+  // Below the card on small screens, between cards on wide ones.
+  left: 50%;
+  bottom: -1.65rem;
+  transform: translateX(-50%) rotate(90deg);
+
+  @include up('md') {
+    left: auto;
+    right: -1.75rem;
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 

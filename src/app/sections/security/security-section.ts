@@ -4,11 +4,12 @@ import { FlowDiagram } from '../../components/flow-diagram/flow-diagram';
 import { Icon } from '../../components/icon/icon';
 import { Reveal } from '../../components/reveal/reveal.directive';
 import { SectionHeading } from '../../components/section-heading/section-heading';
+import { SecurityVisual } from '../../components/security-visual/security-visual';
 import { portfolioData } from '../../data/portfolioData';
 
 @Component({
   selector: 'app-security-section',
-  imports: [SectionHeading, FeatureCard, FlowDiagram, Icon, Reveal],
+  imports: [SectionHeading, FeatureCard, FlowDiagram, Icon, Reveal, SecurityVisual],
   templateUrl: './security-section.html',
   styleUrl: './security-section.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

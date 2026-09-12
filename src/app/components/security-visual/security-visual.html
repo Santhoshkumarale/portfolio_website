@@ -1,0 +1,108 @@
+<div class="visual" [attr.data-kind]="kind()" aria-hidden="true">
+  @switch (kind()) {
+    @case ('token') {
+      <div class="token">
+        <span class="token__part token__part--header">header</span>
+        <span class="token__dot">.</span>
+        <span class="token__part token__part--payload">payload</span>
+        <span class="token__dot">.</span>
+        <span class="token__part token__part--sig">signature</span>
+      </div>
+      <div class="row row--meta">
+        <span class="pill pill--ok"><app-icon name="check" [size]="11" />signature verified</span>
+        <span class="pill">exp · short-lived</span>
+      </div>
+    }
+
+    @case ('policy') {
+      <div class="policy">
+        <div class="policy__row">
+          <span class="policy__subject">hr-admin</span>
+          <span class="policy__action">employee:write</span>
+          <span class="pill pill--ok">allow</span>
+        </div>
+        <div class="policy__row">
+          <span class="policy__subject">employee</span>
+          <span class="policy__action">employee:write</span>
+          <span class="pill pill--deny">deny</span>
+        </div>
+      </div>
+    }
+
+    @case ('cipher') {
+      <div class="row row--meta">
+        <span class="mono">plaintext</span>
+        <app-icon name="arrow-right" [size]="12" />
+        <span class="pill pill--accent"><app-icon name="lock" [size]="11" />AES-256-GCM</span>
+      </div>
+      <div class="cipher">
+        <span class="cipher__seg cipher__seg--nonce">nonce<small>12 B</small></span>
+        <span class="cipher__seg cipher__seg--tag">tag<small>16 B</small></span>
+        <span class="cipher__seg cipher__seg--data">ciphertext</span>
+      </div>
+    }
+
+    @case ('hash') {
+      <div class="hash">
+        <span class="hash__in mono">secret</span>
+        <span class="hash__fn">
+          <app-icon name="hash" [size]="13" />
+        </span>
+        <span class="hash__out mono">9f3a…c21e</span>
+      </div>
+      <div class="row row--meta">
+        <span class="pill pill--deny"><app-icon name="x" [size]="11" />no way back</span>
+        <span class="pill">salted</span>
+      </div>
+    }
+
+    @case ('mask') {
+      <div class="mask">
+        <div class="mask__col">
+          <span class="mask__label">stored</span>
+          <span class="mask__value mono">7231 0087</span>
+        </div>
+        <app-icon name="arrow-right" [size]="12" />
+        <div class="mask__col">
+          <span class="mask__label">displayed</span>
+          <span class="mask__value mask__value--masked mono">
+            <span class="mask__hidden">••••</span> 0087
+          </span>
+        </div>
+      </div>
+    }
+
+    @case ('audit') {
+      <ol class="audit">
+        <li>
+          <span class="audit__actor">hr-admin</span>
+          <span class="audit__action audit__action--read">READ</span>
+          <span class="audit__target">employee/1042</span>
+        </li>
+        <li>
+          <span class="audit__actor">hr-admin</span>
+          <span class="audit__action audit__action--write">UPDATE</span>
+          <span class="audit__target">employee/1042</span>
+        </li>
+        <li>
+          <span class="audit__actor">payroll</span>
+          <span class="audit__action audit__action--read">DECRYPT</span>
+          <span class="audit__target">national_id</span>
+        </li>
+      </ol>
+    }
+
+    @case ('captcha') {
+      <div class="captcha">
+        <span class="captcha__box">
+          <app-icon name="check" [size]="14" />
+        </span>
+        <span class="captcha__text">
+          <span>Human verified</span>
+          <span class="captcha__sub mono">sign-in · sign-up</span>
+        </span>
+        <span class="pill pill--deny">bots</span>
+      </div>
+    }
+  }
+</div>
