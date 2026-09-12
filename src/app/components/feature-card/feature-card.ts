@@ -8,6 +8,9 @@ import { IconName } from '../icon/icon-names';
  * Glass card with an icon, title, description and optional tags.
  * Used for focus areas, architecture concepts, security controls,
  * backend capabilities and database practices.
+ *
+ * Project an element marked with the `cardVisual` attribute to render an
+ * illustration between the title and the description.
  */
 @Component({
   selector: 'app-feature-card',
@@ -18,6 +21,7 @@ import { IconName } from '../icon/icon-names';
         <app-icon [name]="icon()" [size]="22" />
       </div>
       <h3 class="card__title">{{ title() }}</h3>
+      <ng-content select="[cardVisual]" />
       <p class="card__description">{{ description() }}</p>
       @if (tags().length) {
         <ul class="card__tags" role="list" [attr.aria-label]="title() + ' technologies'">

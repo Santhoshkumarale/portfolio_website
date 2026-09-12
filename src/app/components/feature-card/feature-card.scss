@@ -27,6 +27,39 @@
       transparent
     );
     opacity: 0.8;
+    transition: opacity var(--dur) var(--ease-out);
+  }
+
+  // Soft light in the top-left corner that strengthens on hover.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      360px 180px at 0% 0%,
+      color-mix(in srgb, var(--card-accent, var(--accent)) 12%, transparent),
+      transparent 70%
+    );
+    opacity: 0.6;
+    transition: opacity var(--dur) var(--ease-out);
+    pointer-events: none;
+  }
+
+  &:hover {
+    &::before {
+      opacity: 1;
+    }
+    &::after {
+      opacity: 1;
+    }
+    .card__icon {
+      border-color: var(--card-accent, var(--border-strong));
+    }
+  }
+
+  > * {
+    position: relative;
   }
 
   &[data-tone='accent'] {
@@ -60,6 +93,7 @@
   background: var(--card-icon-bg, var(--surface-strong));
   color: var(--card-icon-fg, var(--accent));
   border: 1px solid var(--border);
+  transition: border-color var(--dur) var(--ease-out);
 }
 
 .card__title {

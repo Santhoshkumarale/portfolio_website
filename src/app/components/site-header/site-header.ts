@@ -32,6 +32,8 @@ export class SiteHeader {
   protected readonly nav = portfolioData.nav;
 
   protected readonly scrolled = signal(false);
+  /** 0–1 fraction of the document scrolled, drives the header progress bar. */
+  protected readonly progress = signal(0);
   protected readonly menuOpen = signal(false);
   protected readonly activeId = signal<string | null>(null);
 
@@ -90,10 +92,20 @@ export class SiteHeader {
   }
 
   private observeScroll(): void {
-    const update = () => this.scrolled.set(window.scrollY > 8);
+    const root = this.document.documentElement;
+    const update = () => {
+      const y = window.scrollY;
+      const max = root.scrollHeight - window.innerHeight;
+      this.scrolled.set(y > 8);
+      this.progress.set(max > 0 ? Math.min(1, y / max) : 0);
+    };
     update();
     window.addEventListener('scroll', update, { passive: true });
-    this.destroyRef.onDestroy(() => window.removeEventListener('scroll', update));
+    window.addEventListener('resize', update, { passive: true });
+    this.destroyRef.onDestroy(() => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    });
   }
 
   private observeSections(): void {

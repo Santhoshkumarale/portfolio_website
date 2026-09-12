@@ -44,6 +44,12 @@
     </button>
   </div>
 
+  <span
+    class="header__progress"
+    aria-hidden="true"
+    [style.transform]="'scaleX(' + progress() + ')'"
+  ></span>
+
   @if (menuOpen()) {
     <div #mobilePanel id="mobile-nav" class="mobile">
       <nav aria-label="Mobile">
