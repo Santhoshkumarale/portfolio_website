@@ -2,6 +2,7 @@
   <div class="container">
     <app-section-heading
       headingId="projects-title"
+      [number]="meta.number"
       [eyebrow]="meta.eyebrow"
       [title]="meta.title"
       [description]="meta.description"
@@ -16,29 +17,59 @@
           appReveal
         >
           <div class="project__content">
-            <p class="project__category">
-              <span class="project__index" aria-hidden="true">0{{ i + 1 }}</span>
-              {{ project.category }}
-            </p>
-            <h3 class="project__title" [id]="'project-' + project.id">{{ project.title }}</h3>
-            <p class="project__summary">{{ project.summary }}</p>
+            <header class="project__header">
+              <p class="project__category">
+                <span class="project__index" aria-hidden="true">0{{ i + 1 }}</span>
+                {{ project.category }}
+              </p>
+              <h3 class="project__title" [id]="'project-' + project.id">{{ project.title }}</h3>
+            </header>
 
-            <ul class="project__highlights" role="list" aria-label="Key capabilities">
-              @for (item of project.highlights; track item) {
-                <li>
-                  <app-icon name="check" [size]="14" />
-                  <span>{{ item }}</span>
-                </li>
-              }
-            </ul>
+            <div class="brief">
+              <div class="brief__item brief__item--problem">
+                <p class="brief__label">
+                  <app-icon name="alert" [size]="13" />
+                  Problem
+                </p>
+                <p class="brief__text">{{ project.problem }}</p>
+              </div>
+              <div class="brief__item brief__item--solution">
+                <p class="brief__label">
+                  <app-icon name="check" [size]="13" />
+                  Solution
+                </p>
+                <p class="brief__text">{{ project.solution }}</p>
+              </div>
+            </div>
 
-            <ul class="project__tech" role="list" aria-label="Technology context">
-              @for (tech of project.technologies; track tech) {
-                <li>
-                  <app-chip tone="accent">{{ tech }}</app-chip>
-                </li>
-              }
-            </ul>
+            <div class="brief__item brief__item--tech">
+              <p class="brief__label">
+                <app-icon name="code" [size]="13" />
+                Technology
+              </p>
+              <ul class="project__tech" role="list" aria-label="Technology context">
+                @for (tech of project.technologies; track tech) {
+                  <li>
+                    <app-chip tone="accent">{{ tech }}</app-chip>
+                  </li>
+                }
+              </ul>
+            </div>
+
+            <div class="brief__item brief__item--contribution">
+              <p class="brief__label">
+                <app-icon name="wrench" [size]="13" />
+                Engineering contribution
+              </p>
+              <ul class="project__contribution" role="list">
+                @for (item of project.contribution; track item) {
+                  <li>
+                    <span class="project__bullet" aria-hidden="true"></span>
+                    <span>{{ item }}</span>
+                  </li>
+                }
+              </ul>
+            </div>
           </div>
 
           <div class="project__visual">

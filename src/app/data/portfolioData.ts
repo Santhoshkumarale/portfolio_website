@@ -13,6 +13,7 @@ export const portfolioData: PortfolioData = {
     role: 'Software Engineer',
     positioning: 'Software Engineer | .NET & Enterprise Application Development',
     headline: 'Building secure, scalable and enterprise-grade applications.',
+    headlineHighlight: 'enterprise-grade',
     supportingText:
       'I specialize in building enterprise applications and secure backend systems using .NET, ASP.NET Core, Angular, PostgreSQL and SQL Server.',
     location: '[City, Country]',
@@ -51,11 +52,13 @@ export const portfolioData: PortfolioData = {
   sections: {
     about: {
       id: 'about',
+      number: '01',
       eyebrow: 'About',
       title: 'Enterprise software, built with care for the data behind it.',
     },
     experience: {
       id: 'experience',
+      number: '02',
       eyebrow: 'Experience',
       title: 'Professional experience',
       description:
@@ -63,6 +66,7 @@ export const portfolioData: PortfolioData = {
     },
     projects: {
       id: 'projects',
+      number: '03',
       eyebrow: 'Featured Projects',
       title: 'Selected work',
       description:
@@ -70,6 +74,7 @@ export const portfolioData: PortfolioData = {
     },
     architecture: {
       id: 'architecture',
+      number: '04',
       eyebrow: 'System Architecture',
       title: 'Layered systems with clear boundaries',
       description:
@@ -77,6 +82,7 @@ export const portfolioData: PortfolioData = {
     },
     security: {
       id: 'security',
+      number: '05',
       eyebrow: 'Security Engineering',
       title: 'Security is a design constraint, not a feature.',
       description:
@@ -84,6 +90,7 @@ export const portfolioData: PortfolioData = {
     },
     backend: {
       id: 'backend',
+      number: '06',
       eyebrow: 'Backend Engineering',
       title: 'ASP.NET Core APIs that are predictable under pressure',
       description:
@@ -91,6 +98,7 @@ export const portfolioData: PortfolioData = {
     },
     database: {
       id: 'database',
+      number: '07',
       eyebrow: 'Database Engineering',
       title: 'Relational data, modelled and queried with intent',
       description:
@@ -98,6 +106,7 @@ export const portfolioData: PortfolioData = {
     },
     journey: {
       id: 'journey',
+      number: '08',
       eyebrow: 'Development Journey',
       title: 'How my focus has evolved',
       description:
@@ -105,16 +114,19 @@ export const portfolioData: PortfolioData = {
     },
     github: {
       id: 'github',
+      number: '09',
       eyebrow: 'GitHub',
       title: 'Open source & code samples',
     },
     resume: {
       id: 'resume',
+      number: '10',
       eyebrow: 'Resume',
       title: 'Resume',
     },
     contact: {
       id: 'contact',
+      number: '11',
       eyebrow: 'Contact',
       title: "Let's build something secure and scalable.",
     },
@@ -216,15 +228,16 @@ export const portfolioData: PortfolioData = {
       id: 'enterprise-hrms',
       title: 'Enterprise HRMS Platform',
       category: 'Enterprise application',
-      summary:
-        'A human resource management system that centralises employee records, job information and organisational structure behind secured APIs, with reporting and database-driven workflows.',
-      highlights: [
-        'Employee management: profiles, personal data and lifecycle changes',
-        'Job information: positions, assignments and effective-dated history',
-        'Organisational information: departments, reporting lines and locations',
-        'REST APIs with authentication and role-based authorization',
-        'Reporting backed by views, functions and stored procedures',
-        'Database workflows for imports, approvals and data corrections',
+      problem:
+        'Enterprise HR data — employees, job assignments and organisational structure — needs a single, secured system of record with reliable reporting and controlled workflows.',
+      solution:
+        'A .NET and Angular HRMS platform: ASP.NET Core Web APIs over Entity Framework Core with PostgreSQL and SQL Server, role-based authorization, and reporting built on database views, functions and stored procedures.',
+      contribution: [
+        'Designed REST endpoints for employee, job and organisational data',
+        'Implemented authentication and role-based authorization on the API',
+        'Built reporting queries, views, functions and stored procedures',
+        'Delivered Angular features consuming the platform APIs',
+        'Debugged production issues and resolved QA-reported defects',
       ],
       technologies: [
         '.NET',
@@ -253,15 +266,16 @@ export const portfolioData: PortfolioData = {
       id: 'secure-api-data-protection',
       title: 'Secure API & Data Protection',
       category: 'Application security',
-      summary:
-        'A data-protection layer for sensitive fields: authenticated encryption with AES-256-GCM, a fresh random nonce per operation, keys managed outside the database, and masking, hashing and audit logging around every access.',
-      highlights: [
-        'AES-256-GCM authenticated encryption for field-level protection',
-        'Dedicated encryption / decryption services injected where needed',
-        'Random 96-bit IV/nonce generated per encryption operation',
-        'Keys held in a secure store, never in source or the database',
-        'Data masking for display and hashing for lookups and integrity',
-        'Audit logging of who accessed or changed protected data',
+      problem:
+        'Sensitive personal fields must stay protected even if the database or a backup is exposed, while day-to-day users still need to work with the records.',
+      solution:
+        'A field-level protection layer: AES-256-GCM encryption and decryption services with a random nonce per value, keys held outside the database, plus masking, hashing and audit logging around every access to protected data.',
+      contribution: [
+        'Implemented the AES-256-GCM encryption and decryption services',
+        'Integrated encrypted fields with Entity Framework Core entities and migrations',
+        'Added data masking for display and hashing for lookups',
+        'Wrote audit logging for access to and changes of protected data',
+        'Added CAPTCHA verification to public entry points',
       ],
       technologies: [
         'ASP.NET Core',
@@ -301,14 +315,15 @@ export const portfolioData: PortfolioData = {
       id: 'enterprise-api-architecture',
       title: 'Enterprise API Architecture',
       category: 'System design',
-      summary:
-        'The request path used across the platform: an Angular client calls an ASP.NET Core API, identity and permissions are checked, and work flows through services and business logic down to Entity Framework Core and the relational database.',
-      highlights: [
-        'Single, well-defined path for every request',
-        'Authentication and authorization enforced before any business logic runs',
-        'Service layer keeps controllers thin and logic testable',
-        'Entity Framework Core mediates all database access',
-        'Runs against PostgreSQL and SQL Server',
+      problem:
+        'Multiple modules and clients need one consistent, testable request path where security is enforced before any business logic runs.',
+      solution:
+        'A layered ASP.NET Core architecture: identity and permissions checked at the boundary, thin controllers, a dependency-injected service layer for business rules, and Entity Framework Core mediating all access to PostgreSQL and SQL Server.',
+      contribution: [
+        'Defined the controller → service → data-access structure',
+        'Configured dependency injection, exception handling and logging',
+        'Applied JWT authentication and policy-based authorization',
+        'Standardised validation and error responses across endpoints',
       ],
       technologies: [
         'Angular',
@@ -354,6 +369,7 @@ export const portfolioData: PortfolioData = {
         name: 'Frontend',
         technology: 'Angular · TypeScript',
         description: 'Component-based UI consuming REST endpoints over HTTPS.',
+        responsibilities: ['Components', 'Services', 'HTTP interceptors', 'Route guards'],
         icon: 'monitor',
         tone: 'sky',
       },
@@ -361,6 +377,7 @@ export const portfolioData: PortfolioData = {
         name: 'API',
         technology: 'ASP.NET Core Web API',
         description: 'Controllers, routing, model validation and the middleware pipeline.',
+        responsibilities: ['Controllers', 'Middleware', 'DTO validation', 'Problem details'],
         icon: 'server',
         tone: 'accent',
       },
@@ -369,6 +386,12 @@ export const portfolioData: PortfolioData = {
         technology: 'Application services · C#',
         description:
           'Rules, orchestration and transactions, composed through dependency injection.',
+        responsibilities: [
+          'Application services',
+          'Business rules',
+          'Transactions',
+          'Encryption service',
+        ],
         icon: 'cpu',
         tone: 'neutral',
       },
@@ -376,6 +399,7 @@ export const portfolioData: PortfolioData = {
         name: 'Data access',
         technology: 'Entity Framework Core',
         description: 'DbContext, entity mappings, migrations and query translation.',
+        responsibilities: ['DbContext', 'Entity configuration', 'Value converters', 'Migrations'],
         icon: 'box',
         tone: 'neutral',
       },
@@ -383,6 +407,7 @@ export const portfolioData: PortfolioData = {
         name: 'Database',
         technology: 'PostgreSQL · SQL Server',
         description: 'Normalised schemas, views, functions, stored procedures and indexes.',
+        responsibilities: ['Tables & constraints', 'Views', 'Functions & procedures', 'Indexes'],
         icon: 'database',
         tone: 'sky',
       },
@@ -468,6 +493,7 @@ export const portfolioData: PortfolioData = {
         icon: 'fingerprint',
         tags: ['JWT', 'Bearer tokens', 'Token validation'],
         tone: 'accent',
+        visual: 'token',
       },
       {
         title: 'Authorization',
@@ -476,6 +502,7 @@ export const portfolioData: PortfolioData = {
         icon: 'shield-check',
         tags: ['Roles', 'Policies', 'Claims'],
         tone: 'emerald',
+        visual: 'policy',
       },
       {
         title: 'Encryption',
@@ -484,6 +511,7 @@ export const portfolioData: PortfolioData = {
         icon: 'lock',
         tags: ['AES-256-GCM', 'Field-level', 'Random nonce'],
         tone: 'accent',
+        visual: 'cipher',
       },
       {
         title: 'Hashing',
@@ -492,6 +520,7 @@ export const portfolioData: PortfolioData = {
         icon: 'hash',
         tags: ['One-way', 'Salted', 'Integrity'],
         tone: 'sky',
+        visual: 'hash',
       },
       {
         title: 'Masking',
@@ -500,6 +529,7 @@ export const portfolioData: PortfolioData = {
         icon: 'eye-off',
         tags: ['Partial display', 'Log redaction', 'Least exposure'],
         tone: 'amber',
+        visual: 'mask',
       },
       {
         title: 'Audit logging',
@@ -508,6 +538,7 @@ export const portfolioData: PortfolioData = {
         icon: 'clipboard',
         tags: ['Who / what / when', 'Immutable trail', 'Reviews'],
         tone: 'sky',
+        visual: 'audit',
       },
       {
         title: 'CAPTCHA',
@@ -516,6 +547,7 @@ export const portfolioData: PortfolioData = {
         icon: 'scan',
         tags: ['Bot protection', 'Public endpoints', 'Rate limiting'],
         tone: 'neutral',
+        visual: 'captcha',
       },
     ],
     encryptFlow: [
@@ -558,6 +590,29 @@ export const portfolioData: PortfolioData = {
       { label: 'Auth tag', value: '128-bit, verified on decrypt' },
       { label: 'Key storage', value: 'Secure store, outside the database' },
       { label: 'Scope', value: 'Field-level, selected columns' },
+    ],
+    valueStates: [
+      {
+        label: 'Authorized application',
+        context: 'Decrypted in memory for a permitted caller',
+        sample: '1990-04-12',
+        icon: 'shield-check',
+        tone: 'emerald',
+      },
+      {
+        label: 'Database column',
+        context: 'nonce ‖ tag ‖ ciphertext, Base64',
+        sample: 'kQ7v…Zt2A==',
+        icon: 'database',
+        tone: 'sky',
+      },
+      {
+        label: 'API response & logs',
+        context: 'Masked unless the caller is permitted',
+        sample: '••••-••-12',
+        icon: 'eye-off',
+        tone: 'amber',
+      },
     ],
   },
 

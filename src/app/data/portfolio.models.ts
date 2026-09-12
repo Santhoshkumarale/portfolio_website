@@ -23,6 +23,8 @@ export interface PersonalInfo {
   /** Positioning statement used in the header brand and metadata. */
   positioning: string;
   headline: string;
+  /** Exact substring of `headline` to emphasise visually (optional). */
+  headlineHighlight?: string;
   supportingText: string;
   location: string;
   email: string;
@@ -45,6 +47,8 @@ export type SectionId =
 
 export interface SectionMeta {
   id: SectionId;
+  /** Two-digit ordinal shown beside the eyebrow, e.g. "01". */
+  number?: string;
   eyebrow: string;
   title: string;
   description?: string;
@@ -98,8 +102,12 @@ export interface Project {
   id: string;
   title: string;
   category: string;
-  summary: string;
-  highlights: string[];
+  /** The need or constraint the system addresses. */
+  problem: string;
+  /** What was built to address it. */
+  solution: string;
+  /** Concrete engineering work on the project. */
+  contribution: string[];
   technologies: string[];
   visual: ProjectVisual;
 }
@@ -108,6 +116,8 @@ export interface ArchitectureLayer {
   name: string;
   technology: string;
   description: string;
+  /** Concrete building blocks that live in this layer. */
+  responsibilities: string[];
   icon: IconName;
   tone: Tone;
 }
@@ -132,11 +142,30 @@ export interface EncryptionFact {
   value: string;
 }
 
+/** Small CSS-drawn illustration rendered inside a security control card. */
+export type SecurityVisualKind =
+  'token' | 'policy' | 'cipher' | 'hash' | 'mask' | 'audit' | 'captcha';
+
+export interface SecurityControl extends ConceptCard {
+  visual: SecurityVisualKind;
+}
+
+/** One state of a sensitive value as it moves through the system. */
+export interface ValueState {
+  label: string;
+  context: string;
+  /** Illustrative sample only — never a real value. */
+  sample: string;
+  icon: IconName;
+  tone: Tone;
+}
+
 export interface SecurityContent {
-  controls: ConceptCard[];
+  controls: SecurityControl[];
   encryptFlow: FlowStep[];
   decryptFlow: FlowStep[];
   encryptionFacts: EncryptionFact[];
+  valueStates: ValueState[];
 }
 
 export type CodeLanguage = 'csharp' | 'sql';
