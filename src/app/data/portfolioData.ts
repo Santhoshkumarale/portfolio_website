@@ -9,9 +9,9 @@ import { PortfolioData } from './portfolio.models';
  */
 export const portfolioData: PortfolioData = {
   personal: {
-    name: '[Your Name]',
-    role: 'Software Engineer',
-    positioning: 'Software Engineer | .NET & Enterprise Application Development',
+    name: 'Ale Santhosh Kumar',
+    role: 'Senior Software Engineer',
+    positioning: 'Senior Software Engineer | .NET & Enterprise Application Development',
     headline: 'Building secure, scalable and enterprise-grade applications.',
     headlineHighlight: 'enterprise-grade',
     supportingText:
@@ -20,7 +20,7 @@ export const portfolioData: PortfolioData = {
     email: '[your.email@example.com]',
     githubUsername: 'GITHUB_USERNAME',
     linkedinUsername: 'LINKEDIN_USERNAME',
-    websiteUrl: '[https://your-domain.example]',
+    websiteUrl: 'https://santhoshkumarale.github.io/portfolio_website',
   },
 
   nav: [

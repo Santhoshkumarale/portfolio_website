@@ -1,6 +1,6 @@
 # Portfolio Website
 
-Personal portfolio for a Software Engineer specialising in .NET and enterprise application development — ASP.NET Core Web APIs, Angular front ends, PostgreSQL / SQL Server, and application security (authentication, authorization, AES-256-GCM field-level encryption, masking, hashing, audit logging).
+Personal portfolio of Ale Santhosh Kumar, Senior Software Engineer specialising in .NET and enterprise application development — ASP.NET Core Web APIs, Angular front ends, PostgreSQL / SQL Server, and application security (authentication, authorization, AES-256-GCM field-level encryption, masking, hashing, audit logging).
 
 Built with **Angular 21** (standalone components, signals, zoneless), **SCSS** design tokens and **static prerendering** — the production output is plain HTML/CSS/JS that can be hosted anywhere.
 
@@ -30,7 +30,7 @@ Values in `[square brackets]` and `UPPER_SNAKE_CASE` identifiers are placeholder
 
 | Placeholder                                                                 | Where                                                                            |
 | --------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `[Your Name]`, `[City, Country]`, `[your.email@example.com]`                | `personal`                                                                       |
+| `[City, Country]`, `[your.email@example.com]`                               | `personal`                                                                       |
 | `[https://your-domain.example]`                                             | `personal.websiteUrl` — enables the canonical link, `og:url` and structured data |
 | `GITHUB_USERNAME`, `LINKEDIN_USERNAME`                                      | `personal` and `social`                                                          |
 | `[Company Name]`, `[Job Title]`, `[Start Date]`, `[End Date]`, `[Location]` | `experience`                                                                     |
