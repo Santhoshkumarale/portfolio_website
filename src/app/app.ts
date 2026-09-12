@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { IconSprite } from './components/icon/icon-sprite';
 import { SiteFooter } from './components/site-footer/site-footer';
 import { SiteHeader } from './components/site-header/site-header';
 import { AboutSection } from './sections/about/about-section';
@@ -17,6 +18,7 @@ import { SecuritySection } from './sections/security/security-section';
 @Component({
   selector: 'app-root',
   imports: [
+    IconSprite,
     SiteHeader,
     SiteFooter,
     HeroSection,
