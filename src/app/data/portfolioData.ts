@@ -20,6 +20,7 @@ export const portfolioData: PortfolioData = {
     email: '[your.email@example.com]',
     githubUsername: 'GITHUB_USERNAME',
     linkedinUsername: 'LINKEDIN_USERNAME',
+    websiteUrl: '[https://your-domain.example]',
   },
 
   nav: [

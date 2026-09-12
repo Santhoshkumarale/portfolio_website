@@ -30,6 +30,11 @@ export interface PersonalInfo {
   email: string;
   githubUsername: string;
   linkedinUsername: string;
+  /**
+   * Public URL where this portfolio is deployed (no trailing path). Used for
+   * the canonical link, Open Graph URL and structured data once configured.
+   */
+  websiteUrl: string;
 }
 
 export type SectionId =
