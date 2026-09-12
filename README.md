@@ -82,6 +82,18 @@ SITE_URL=https://your-domain.example npm run build
 
 produces a fully prerendered static site in `dist/portfolio-website/browser` (plus `sitemap.xml` and a `Sitemap:` entry in `robots.txt` when `SITE_URL` is set). Upload that folder to any static host — GitHub Pages, Cloudflare Pages, Netlify, Vercel, Azure Static Web Apps.
 
+### GitHub Pages (included)
+
+`.github/workflows/deploy-pages.yml` builds and publishes the site on every push to `main` (and on demand via **Actions → Deploy to GitHub Pages → Run workflow**). It runs typecheck, lint and tests first, sets the correct `--base-href` (`/<repo>/` for a project site, `/` for a `<user>.github.io` repo or a `public/CNAME` custom domain), passes the matching `SITE_URL` to the sitemap step, and copies `index.html` to `404.html`.
+
+One-time setup in the repository settings:
+
+1. GitHub Pages is only available for **public** repositories on the free plan (private repositories need GitHub Pro/Team). Make the repository public if needed.
+2. **Settings → Pages → Build and deployment → Source: GitHub Actions.**
+3. Push to `main` (or run the workflow manually). The site is then served at `https://<owner>.github.io/<repo>/`.
+
+### Other static hosts
+
 Recommended host configuration:
 
 - Serve `index.html` for `/` (no server-side routing is needed; there is a single prerendered route).

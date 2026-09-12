@@ -13,9 +13,9 @@ if (!siteUrl) {
   process.exit(0);
 }
 
-if (!/^https?:\/\/[^\s/]+$/i.test(siteUrl)) {
+if (!/^https?:\/\/[^\s?#]+$/i.test(siteUrl)) {
   console.error(
-    `[sitemap] SITE_URL must be an origin like https://example.com (got "${siteUrl}").`,
+    `[sitemap] SITE_URL must be an absolute URL such as https://example.com or https://user.github.io/repo (got "${siteUrl}").`,
   );
   process.exit(1);
 }

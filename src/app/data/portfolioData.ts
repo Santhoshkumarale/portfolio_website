@@ -930,7 +930,8 @@ END;`,
   },
 
   resume: {
-    url: '/resume.pdf',
+    // Relative so it also resolves under a sub-path deployment such as GitHub Pages.
+    url: 'resume.pdf',
     fileName: 'resume.pdf',
     description:
       'A concise summary of my experience with .NET, ASP.NET Core, Angular, PostgreSQL, SQL Server and application security.',

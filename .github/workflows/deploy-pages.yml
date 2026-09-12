@@ -1,0 +1,79 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two deployments at once; let an in-flight one finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+
+      # Project sites live at https://<owner>.github.io/<repo>/, so the app needs a
+      # matching base href. A user/organisation site (<owner>.github.io repo) or a
+      # custom domain is served from the root instead.
+      - name: Resolve site URL and base href
+        id: site
+        env:
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+        run: |
+          owner="$(echo "$OWNER" | tr '[:upper:]' '[:lower:]')"
+          if [ -f public/CNAME ]; then
+            echo "base_href=/" >> "$GITHUB_OUTPUT"
+            echo "site_url=https://$(cat public/CNAME | tr -d '[:space:]')" >> "$GITHUB_OUTPUT"
+          elif [ "$(echo "$REPO" | tr '[:upper:]' '[:lower:]')" = "$owner.github.io" ]; then
+            echo "base_href=/" >> "$GITHUB_OUTPUT"
+            echo "site_url=https://$owner.github.io" >> "$GITHUB_OUTPUT"
+          else
+            echo "base_href=/$REPO/" >> "$GITHUB_OUTPUT"
+            echo "site_url=https://$owner.github.io/$REPO" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build
+        env:
+          SITE_URL: ${{ steps.site.outputs.site_url }}
+        run: npm run build -- --base-href "${{ steps.site.outputs.base_href }}"
+
+      - name: Prepare Pages artifact
+        run: |
+          # Serve the prerendered page for unknown paths too, and skip Jekyll processing.
+          cp dist/portfolio-website/browser/index.html dist/portfolio-website/browser/404.html
+          touch dist/portfolio-website/browser/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/portfolio-website/browser
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
