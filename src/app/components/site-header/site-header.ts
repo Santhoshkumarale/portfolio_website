@@ -5,6 +5,7 @@ import {
   DestroyRef,
   ElementRef,
   afterNextRender,
+  afterRenderEffect,
   inject,
   signal,
   viewChild,
@@ -23,6 +24,7 @@ const DESKTOP_QUERY = '(min-width: 1024px)';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '(document:keydown.escape)': 'closeMenu()',
+    '(click)': 'onHostClick($event)',
   },
 })
 export class SiteHeader {
@@ -45,6 +47,24 @@ export class SiteHeader {
       this.observeSections();
       this.observeViewport();
     });
+
+    // Runs after the panel has actually been rendered (zoneless-safe), so the
+    // first link can receive focus for keyboard users.
+    afterRenderEffect(() => {
+      const panel = this.mobilePanel()?.nativeElement;
+      if (panel && this.menuOpen()) {
+        panel.querySelector<HTMLElement>('a')?.focus();
+      }
+    });
+  }
+
+  /** Any link inside the mobile panel (nav items or the CTA) closes it after navigation. */
+  protected onHostClick(event: MouseEvent): void {
+    if (!this.menuOpen()) return;
+    const target = event.target as HTMLElement | null;
+    if (target?.closest('a') && target.closest('#mobile-nav')) {
+      this.closeMenu(false);
+    }
   }
 
   protected toggleMenu(): void {
@@ -58,19 +78,6 @@ export class SiteHeader {
   protected openMenu(): void {
     this.menuOpen.set(true);
     this.document.body.style.overflow = 'hidden';
-    queueMicrotask(() => {
-      const panel = this.mobilePanel()?.nativeElement;
-      if (!panel) return;
-      panel.querySelector<HTMLElement>('a')?.focus();
-      // Any link inside the panel (nav items or the CTA) closes it after navigation.
-      panel.addEventListener(
-        'click',
-        (event) => {
-          if ((event.target as HTMLElement).closest('a')) this.closeMenu(false);
-        },
-        { once: false },
-      );
-    });
   }
 
   protected closeMenu(returnFocus = true): void {
@@ -107,8 +114,7 @@ export class SiteHeader {
           }
         }
         // Prefer the visible section that appears first in nav order.
-        const next = this.nav.find((item) => visible.has(item.id))?.id ?? null;
-        if (next) this.activeId.set(next);
+        this.activeId.set(this.nav.find((item) => visible.has(item.id))?.id ?? null);
       },
       { rootMargin: '-40% 0px -50% 0px', threshold: [0, 0.1, 0.25] },
     );

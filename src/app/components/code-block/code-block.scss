@@ -3,11 +3,14 @@
 :host {
   display: block;
   min-width: 0;
+  max-width: 100%;
 }
 
 .code {
   @include glass(var(--radius));
   overflow: hidden;
+  // Long code lines must never dictate layout width; the <pre> scrolls instead.
+  contain: inline-size;
   background: linear-gradient(180deg, rgba(10, 12, 17, 0.85), rgba(10, 12, 17, 0.7));
 }
 

@@ -63,7 +63,6 @@ pre {
 .section {
   position: relative;
   padding-block: var(--section-y);
-  scroll-margin-top: var(--header-h);
 }
 
 .section--alt {
@@ -77,6 +76,7 @@ pre {
 
 .grid {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem;
 }
 

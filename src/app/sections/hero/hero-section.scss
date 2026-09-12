@@ -32,6 +32,11 @@
   align-items: center;
 
   @include up('lg') {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+    gap: 3rem;
+  }
+
+  @include up('xl') {
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
     gap: 4rem;
   }
@@ -71,6 +76,11 @@
 
 h1 {
   max-width: 14ch;
+  font-size: clamp(2.5rem, 1.2rem + 3.6vw, 4.5rem);
+
+  @include up('xl') {
+    font-size: var(--fs-hero);
+  }
 }
 
 .hero__supporting {
@@ -141,7 +151,7 @@ h1 {
 
 .hero__glow {
   position: absolute;
-  inset: -20% -10%;
+  inset: -20% 0;
   z-index: -1;
   background: radial-gradient(ellipse at 50% 50%, rgba(139, 156, 255, 0.18), transparent 60%);
   filter: blur(20px);
