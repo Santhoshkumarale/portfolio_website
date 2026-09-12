@@ -14,7 +14,9 @@ import { tokenize } from '../../utils/highlight';
       <pre
         class="code__pre"
         tabindex="0"
-      ><code [attr.aria-label]="snippet().title">@for (token of tokens(); track $index) {<span [class]="'tok tok--' + token.type">{{ token.text }}</span>}</code></pre>
+        role="region"
+        [attr.aria-label]="snippet().title"
+      ><code>@for (token of tokens(); track $index) {<span [class]="'tok tok--' + token.type">{{ token.text }}</span>}</code></pre>
       @if (snippet().caption; as caption) {
         <p class="code__caption">{{ caption }}</p>
       }

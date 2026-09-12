@@ -87,7 +87,7 @@
   color: #a7f3d0;
 }
 .tok--comment {
-  color: #6b7280;
+  color: var(--text-2);
   font-style: italic;
 }
 .tok--number {

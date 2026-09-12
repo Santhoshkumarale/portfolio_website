@@ -79,7 +79,11 @@
                         @if (repo.language) {
                           <app-chip tone="accent">{{ repo.language }}</app-chip>
                         }
-                        <span class="repo__stars">★ {{ repo.stargazers_count }}</span>
+                        <span class="repo__stars">
+                          <span aria-hidden="true">★</span>
+                          {{ repo.stargazers_count }}
+                          <span class="visually-hidden">stars</span>
+                        </span>
                       </span>
                     </a>
                   </li>
