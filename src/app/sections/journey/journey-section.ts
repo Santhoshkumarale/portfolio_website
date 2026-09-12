@@ -12,6 +12,7 @@ import { portfolioData } from '../../data/portfolioData';
       <div class="container">
         <app-section-heading
           headingId="journey-title"
+          [number]="meta.number"
           [eyebrow]="meta.eyebrow"
           [title]="meta.title"
           [description]="meta.description"

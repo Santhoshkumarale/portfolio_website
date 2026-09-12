@@ -15,6 +15,7 @@ import { portfolioData } from '../../data/portfolioData';
           <div class="resume__content">
             <app-section-heading
               headingId="resume-title"
+              [number]="meta.number"
               [eyebrow]="meta.eyebrow"
               [title]="meta.title"
               [compact]="true"
