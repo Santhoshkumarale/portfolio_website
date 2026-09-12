@@ -1,0 +1,104 @@
+@use 'sass:map';
+
+// Breakpoints — target widths: 390, 430, 768, 1024, 1440, 1920
+$breakpoints: (
+  'sm': 480px,
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1440px,
+  'xxl': 1920px,
+);
+
+@mixin up($name) {
+  $value: map.get($breakpoints, $name);
+  @if not $value {
+    @error 'Unknown breakpoint `#{$name}`';
+  }
+  @media (min-width: $value) {
+    @content;
+  }
+}
+
+@mixin down($name) {
+  $value: map.get($breakpoints, $name);
+  @if not $value {
+    @error 'Unknown breakpoint `#{$name}`';
+  }
+  @media (max-width: ($value - 0.02px)) {
+    @content;
+  }
+}
+
+@mixin motion-safe {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
+  }
+}
+
+@mixin motion-reduce {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+// Subtle glass surface: gradient fill, thin border, light blur.
+@mixin glass($radius: var(--radius)) {
+  position: relative;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.018));
+  border: 1px solid var(--border);
+  border-radius: $radius;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: var(--shadow-md);
+}
+
+@mixin card-hover {
+  transition:
+    border-color var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out);
+
+  @include motion-safe {
+    &:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+  }
+
+  @include motion-reduce {
+    &:hover {
+      border-color: var(--border-strong);
+    }
+  }
+}
+
+@mixin focus-ring {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+@mixin eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+@mixin visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

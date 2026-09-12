@@ -1,0 +1,173 @@
+@use 'mixins' as *;
+
+:host {
+  display: block;
+}
+
+.flow {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.flow__step {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  &[data-tone='accent'] {
+    --node-border: var(--accent-border);
+    --node-icon-bg: var(--accent-soft);
+    --node-icon-fg: var(--accent-strong);
+  }
+  &[data-tone='sky'] {
+    --node-border: rgba(92, 200, 255, 0.35);
+    --node-icon-bg: var(--sky-soft);
+    --node-icon-fg: var(--sky);
+  }
+  &[data-tone='emerald'] {
+    --node-border: rgba(74, 222, 128, 0.35);
+    --node-icon-bg: var(--emerald-soft);
+    --node-icon-fg: var(--emerald);
+  }
+  &[data-tone='amber'] {
+    --node-border: rgba(251, 191, 119, 0.35);
+    --node-icon-bg: var(--amber-soft);
+    --node-icon-fg: var(--amber);
+  }
+}
+
+.flow__node {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--node-border, var(--border));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  box-shadow: var(--shadow-sm);
+  min-width: 0;
+}
+
+.flow__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: var(--radius-xs);
+  background: var(--node-icon-bg, var(--surface-strong));
+  color: var(--node-icon-fg, var(--text-1));
+}
+
+.flow__text {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.flow__label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-0);
+  line-height: 1.3;
+}
+
+.flow__detail {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-2);
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.flow__arrow {
+  display: grid;
+  place-items: center;
+  height: 1.75rem;
+  color: var(--text-2);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: linear-gradient(
+      180deg,
+      var(--border-strong),
+      transparent 40%,
+      var(--border-strong)
+    );
+  }
+
+  app-icon {
+    position: relative;
+    background: var(--bg-1);
+    border-radius: 50%;
+  }
+}
+
+.flow--compact {
+  .flow__node {
+    padding: 0.6rem 0.8rem;
+    gap: 0.6rem;
+  }
+  .flow__arrow {
+    height: 1.35rem;
+  }
+}
+
+// Horizontal layout on large screens ----------------------------------------
+@include up('lg') {
+  .flow--responsive {
+    flex-direction: row;
+    align-items: stretch;
+
+    .flow__step {
+      flex: 1 1 0;
+      flex-direction: row;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .flow__node {
+      flex: 1 1 0;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      height: 100%;
+      padding: 0.9rem;
+    }
+
+    .flow__arrow {
+      width: 1.75rem;
+      height: auto;
+      flex-shrink: 0;
+
+      &::before {
+        top: 50%;
+        bottom: auto;
+        left: 0;
+        right: 0;
+        width: auto;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          var(--border-strong),
+          transparent 40%,
+          var(--border-strong)
+        );
+      }
+
+      app-icon {
+        transform: rotate(-90deg);
+      }
+    }
+  }
+}

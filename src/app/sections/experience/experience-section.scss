@@ -1,0 +1,157 @@
+@use 'mixins' as *;
+
+:host {
+  display: block;
+}
+
+.timeline {
+  position: relative;
+  display: grid;
+  gap: 2rem;
+  padding-left: 2.75rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    left: 1.1rem;
+    width: 1px;
+    background: linear-gradient(180deg, var(--accent-border), var(--border) 60%, transparent);
+  }
+
+  @include up('md') {
+    padding-left: 3.5rem;
+
+    &::before {
+      left: 1.25rem;
+    }
+  }
+}
+
+.timeline__item {
+  position: relative;
+}
+
+.timeline__marker {
+  position: absolute;
+  top: 1.35rem;
+  left: -2.75rem;
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: var(--bg-1);
+  border: 1px solid var(--accent-border);
+  color: var(--accent-strong);
+  box-shadow: 0 0 0 5px var(--bg-0);
+
+  @include up('md') {
+    left: -3.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+.entry {
+  @include glass(var(--radius-lg));
+  @include card-hover;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  display: grid;
+  gap: 1.35rem;
+}
+
+.entry__header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem 1.5rem;
+}
+
+.entry__title {
+  font-size: var(--fs-xl);
+}
+
+.entry__company {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+  color: var(--text-1);
+  font-size: var(--fs-sm);
+
+  app-icon {
+    color: var(--text-2);
+  }
+}
+
+.entry__sep {
+  color: var(--text-2);
+}
+
+.entry__dates {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-1);
+  white-space: nowrap;
+}
+
+.entry__summary {
+  color: var(--text-1);
+  line-height: var(--lh-relaxed);
+  max-width: 60rem;
+}
+
+.entry__groups {
+  display: grid;
+  gap: 1.25rem;
+
+  @include up('md') {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 2rem;
+  }
+}
+
+.group__title {
+  @include eyebrow;
+  font-size: 0.68rem;
+  color: var(--text-2);
+  margin-bottom: 0.65rem;
+}
+
+.group__list {
+  display: grid;
+  gap: 0.55rem;
+
+  li {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    font-size: var(--fs-sm);
+    line-height: 1.6;
+    color: var(--text-1);
+  }
+
+  app-icon {
+    margin-top: 0.3rem;
+    color: var(--emerald);
+  }
+}
+
+.entry__tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}

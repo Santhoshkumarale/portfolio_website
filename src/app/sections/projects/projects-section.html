@@ -1,0 +1,102 @@
+<section id="projects" class="section" aria-labelledby="projects-title">
+  <div class="container">
+    <app-section-heading
+      headingId="projects-title"
+      [eyebrow]="meta.eyebrow"
+      [title]="meta.title"
+      [description]="meta.description"
+    />
+
+    <div class="projects">
+      @for (project of projects; track project.id; let i = $index) {
+        <article
+          class="project"
+          [class.project--reverse]="i % 2 === 1"
+          [attr.aria-labelledby]="'project-' + project.id"
+          appReveal
+        >
+          <div class="project__content">
+            <p class="project__category">
+              <span class="project__index" aria-hidden="true">0{{ i + 1 }}</span>
+              {{ project.category }}
+            </p>
+            <h3 class="project__title" [id]="'project-' + project.id">{{ project.title }}</h3>
+            <p class="project__summary">{{ project.summary }}</p>
+
+            <ul class="project__highlights" role="list" aria-label="Key capabilities">
+              @for (item of project.highlights; track item) {
+                <li>
+                  <app-icon name="check" [size]="14" />
+                  <span>{{ item }}</span>
+                </li>
+              }
+            </ul>
+
+            <ul class="project__tech" role="list" aria-label="Technology context">
+              @for (tech of project.technologies; track tech) {
+                <li>
+                  <app-chip tone="accent">{{ tech }}</app-chip>
+                </li>
+              }
+            </ul>
+          </div>
+
+          <div class="project__visual">
+            <p class="visual__title">
+              <app-icon name="workflow" [size]="14" />
+              {{ project.visual.title }}
+            </p>
+
+            @switch (project.visual.kind) {
+              @case ('modules') {
+                <ul class="modules" role="list" [attr.aria-label]="project.visual.title">
+                  @for (module of project.visual.items; track module.label; let m = $index) {
+                    <li class="modules__item" [style.--i]="m">
+                      <span class="modules__icon" aria-hidden="true">
+                        <app-icon [name]="module.icon" [size]="18" />
+                      </span>
+                      <span>{{ module.label }}</span>
+                    </li>
+                  }
+                </ul>
+              }
+              @case ('pipeline') {
+                <div class="pipeline">
+                  <div class="pipeline__col">
+                    <p class="pipeline__label">
+                      <app-icon name="lock" [size]="13" />
+                      Encrypt
+                    </p>
+                    <app-flow-diagram
+                      [steps]="project.visual.encrypt"
+                      [compact]="true"
+                      label="Encryption path"
+                    />
+                  </div>
+                  <div class="pipeline__col">
+                    <p class="pipeline__label">
+                      <app-icon name="key" [size]="13" />
+                      Decrypt
+                    </p>
+                    <app-flow-diagram
+                      [steps]="project.visual.decrypt"
+                      [compact]="true"
+                      label="Decryption path"
+                    />
+                  </div>
+                </div>
+              }
+              @case ('flow') {
+                <app-flow-diagram
+                  [steps]="project.visual.steps"
+                  [compact]="true"
+                  [label]="project.visual.title"
+                />
+              }
+            }
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+</section>

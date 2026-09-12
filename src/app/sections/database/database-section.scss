@@ -1,0 +1,239 @@
+@use 'mixins' as *;
+
+:host {
+  display: block;
+}
+
+// Engines -------------------------------------------------------------------
+
+.engines {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+
+  @include up('md') {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.engine {
+  @include glass(var(--radius-lg));
+  @include card-hover;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  display: grid;
+  gap: 1.25rem;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--engine-color), transparent);
+  }
+
+  &[data-tone='sky'] {
+    --engine-color: var(--sky);
+    --engine-soft: var(--sky-soft);
+  }
+  &[data-tone='accent'] {
+    --engine-color: var(--accent);
+    --engine-soft: var(--accent-soft);
+  }
+}
+
+.engine__header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.engine__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radius-sm);
+  background: var(--engine-soft);
+  color: var(--engine-color);
+  border: 1px solid var(--border);
+}
+
+.engine__name {
+  font-size: var(--fs-xl);
+}
+
+.engine__tagline {
+  margin-top: 0.15rem;
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+}
+
+.engine__list {
+  display: grid;
+  gap: 0.55rem;
+
+  li {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    font-size: var(--fs-sm);
+    line-height: 1.55;
+    color: var(--text-1);
+  }
+
+  app-icon {
+    margin-top: 0.28rem;
+    color: var(--engine-color);
+  }
+}
+
+// Schema --------------------------------------------------------------------
+
+.schema {
+  @include glass(var(--radius-lg));
+  padding: clamp(1.25rem, 3vw, 2rem);
+  margin-bottom: 2.5rem;
+  background:
+    radial-gradient(700px 260px at 100% 0%, rgba(92, 200, 255, 0.07), transparent 70%),
+    rgba(9, 11, 15, 0.5);
+}
+
+.schema__header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.schema__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.schema__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  font-size: var(--fs-xs);
+  color: var(--text-2);
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+}
+
+.legend {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.5rem;
+  height: 1.15rem;
+  padding-inline: 0.3rem;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+
+  &--pk {
+    background: var(--sky-soft);
+    color: var(--sky);
+  }
+  &--enc {
+    background: var(--amber-soft);
+    color: var(--amber);
+  }
+}
+
+.entities {
+  display: grid;
+  gap: 1rem;
+
+  @include up('sm') {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @include up('xl') {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.entity {
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: rgba(14, 17, 22, 0.8);
+  overflow: hidden;
+  min-width: 0;
+}
+
+.entity__name {
+  padding: 0.6rem 0.85rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.035);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.entity__columns {
+  padding: 0.4rem 0;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--text-1);
+  }
+
+  .entity__column--encrypted {
+    color: var(--amber);
+  }
+}
+
+.entity__column-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Practices & snippets ------------------------------------------------------
+
+.practices {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+
+  @include up('sm') {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @include up('lg') {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @include up('xl') {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.snippets {
+  display: grid;
+  gap: 1.5rem;
+
+  @include up('lg') {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,89 @@
+<section id="github" class="section" aria-labelledby="github-title">
+  <div class="container">
+    <app-section-heading headingId="github-title" [eyebrow]="meta.eyebrow" [title]="meta.title" />
+
+    <div class="github">
+      <div class="profile" appReveal>
+        <div class="profile__avatar" aria-hidden="true">
+          <app-icon name="github" [size]="34" />
+        </div>
+        <div class="profile__body">
+          <p class="profile__handle"><span class="muted">github.com/</span>{{ username }}</p>
+          <p class="profile__description">{{ github.description }}</p>
+          <div class="profile__actions">
+            <app-button [href]="profileUrl" [external]="true" icon="external" iconPosition="end">
+              View GitHub Profile
+            </app-button>
+          </div>
+        </div>
+      </div>
+
+      <div class="repos" appReveal [appRevealDelay]="90" aria-live="polite">
+        <p class="repos__title">
+          <app-icon name="git-branch" [size]="15" />
+          Recent public repositories
+        </p>
+
+        @switch (state().status) {
+          @case ('unconfigured') {
+            <div class="repos__empty">
+              <app-icon name="terminal" [size]="20" />
+              <p>{{ github.placeholderNote }}</p>
+            </div>
+          }
+          @case ('loading') {
+            <ul class="repos__skeleton" role="list" aria-label="Loading repositories">
+              @for (i of [1, 2, 3, 4]; track i) {
+                <li></li>
+              }
+            </ul>
+          }
+          @case ('error') {
+            <div class="repos__empty">
+              <app-icon name="alert" [size]="20" />
+              <p>
+                Repositories could not be loaded right now. Visit the profile directly to browse the
+                code.
+              </p>
+            </div>
+          }
+          @case ('loaded') {
+            @if (repos().length === 0) {
+              <div class="repos__empty">
+                <app-icon name="git-branch" [size]="20" />
+                <p>No public repositories yet.</p>
+              </div>
+            } @else {
+              <ul class="repos__list" role="list">
+                @for (repo of repos(); track repo.id) {
+                  <li>
+                    <a
+                      class="repo"
+                      [href]="repo.html_url"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span class="repo__name">
+                        <app-icon name="box" [size]="15" />
+                        {{ repo.name }}
+                      </span>
+                      <span class="repo__description">
+                        {{ repo.description || 'No description provided.' }}
+                      </span>
+                      <span class="repo__meta">
+                        @if (repo.language) {
+                          <app-chip tone="accent">{{ repo.language }}</app-chip>
+                        }
+                        <span class="repo__stars">★ {{ repo.stargazers_count }}</span>
+                      </span>
+                    </a>
+                  </li>
+                }
+              </ul>
+            }
+          }
+        }
+      </div>
+    </div>
+  </div>
+</section>

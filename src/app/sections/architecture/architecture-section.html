@@ -1,0 +1,72 @@
+<section id="architecture" class="section section--alt" aria-labelledby="architecture-title">
+  <div class="container">
+    <app-section-heading
+      headingId="architecture-title"
+      [eyebrow]="meta.eyebrow"
+      [title]="meta.title"
+      [description]="meta.description"
+    />
+
+    <div class="diagram" appReveal>
+      <div class="diagram__grid">
+        <ol class="layers" role="list" aria-label="Application layers, top to bottom">
+          @for (layer of architecture.layers; track layer.name; let i = $index; let last = $last) {
+            <li class="layer" [attr.data-tone]="layer.tone" [style.--i]="i">
+              <span class="layer__index" aria-hidden="true">L{{ i + 1 }}</span>
+              <span class="layer__icon" aria-hidden="true">
+                <app-icon [name]="layer.icon" [size]="20" />
+              </span>
+              <div class="layer__text">
+                <span class="layer__name">{{ layer.name }}</span>
+                <span class="layer__tech">{{ layer.technology }}</span>
+                <span class="layer__description">{{ layer.description }}</span>
+              </div>
+              @if (!last) {
+                <span class="layer__connector" aria-hidden="true">
+                  <app-icon name="arrow-down" [size]="14" />
+                </span>
+              }
+            </li>
+          }
+        </ol>
+
+        <aside class="cross" aria-labelledby="cross-cutting-title">
+          <p id="cross-cutting-title" class="cross__title">Cross-cutting</p>
+          <ul class="cross__list" role="list">
+            @for (concern of architecture.crossCutting; track concern) {
+              <li>
+                <app-icon name="check" [size]="13" />
+                <span>{{ concern }}</span>
+              </li>
+            }
+          </ul>
+          <p class="cross__note">Applied consistently across every layer</p>
+        </aside>
+      </div>
+    </div>
+
+    <ul class="concepts grid grid--3" role="list" aria-label="Architecture concepts">
+      @for (concept of architecture.concepts; track concept.title; let i = $index) {
+        <li appReveal [appRevealDelay]="(i % 3) * 70">
+          <app-feature-card
+            [icon]="concept.icon"
+            [title]="concept.title"
+            [description]="concept.description"
+          />
+        </li>
+      }
+    </ul>
+
+    <div class="principles" appReveal>
+      <p class="principles__title">
+        <app-icon name="layers" [size]="16" />
+        Working principles
+      </p>
+      <ul class="principles__list" role="list">
+        @for (principle of architecture.principles; track principle) {
+          <li>{{ principle }}</li>
+        }
+      </ul>
+    </div>
+  </div>
+</section>

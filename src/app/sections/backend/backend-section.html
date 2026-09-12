@@ -1,0 +1,42 @@
+<section id="backend" class="section section--alt" aria-labelledby="backend-title">
+  <div class="container">
+    <app-section-heading
+      headingId="backend-title"
+      [eyebrow]="meta.eyebrow"
+      [title]="meta.title"
+      [description]="meta.description"
+    />
+
+    <div class="lifecycle" appReveal>
+      <p class="lifecycle__title">
+        <app-icon name="activity" [size]="15" />
+        Request lifecycle in an ASP.NET Core Web API
+      </p>
+      <app-flow-diagram
+        [steps]="backend.requestLifecycle"
+        orientation="responsive"
+        [compact]="true"
+        label="Request lifecycle"
+      />
+    </div>
+
+    <div class="backend">
+      <ul class="capabilities" role="list" aria-label="Backend capabilities">
+        @for (capability of backend.capabilities; track capability.title; let i = $index) {
+          <li appReveal [appRevealDelay]="(i % 2) * 70">
+            <app-feature-card
+              [icon]="capability.icon"
+              [title]="capability.title"
+              [description]="capability.description"
+              [tags]="capability.tags ?? []"
+            />
+          </li>
+        }
+      </ul>
+
+      <div class="backend__code" appReveal>
+        <app-code-block [snippet]="backend.snippet" />
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,91 @@
+<section id="database" class="section" aria-labelledby="database-title">
+  <div class="container">
+    <app-section-heading
+      headingId="database-title"
+      [eyebrow]="meta.eyebrow"
+      [title]="meta.title"
+      [description]="meta.description"
+    />
+
+    <div class="engines">
+      @for (engine of database.engines; track engine.name; let i = $index) {
+        <article class="engine" [attr.data-tone]="engine.tone" appReveal [appRevealDelay]="i * 90">
+          <header class="engine__header">
+            <span class="engine__icon" aria-hidden="true">
+              <app-icon [name]="engine.icon" [size]="22" />
+            </span>
+            <div>
+              <h3 class="engine__name">{{ engine.name }}</h3>
+              <p class="engine__tagline">{{ engine.tagline }}</p>
+            </div>
+          </header>
+          <ul class="engine__list" role="list">
+            @for (capability of engine.capabilities; track capability) {
+              <li>
+                <app-icon name="check" [size]="14" />
+                <span>{{ capability }}</span>
+              </li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+
+    <div class="schema" appReveal>
+      <div class="schema__header">
+        <p class="schema__title">
+          <app-icon name="table" [size]="15" />
+          Illustrative HRMS schema
+        </p>
+        <ul class="schema__legend" role="list" aria-label="Legend">
+          <li><span class="legend legend--pk">PK</span> primary key</li>
+          <li>
+            <span class="legend legend--enc"><app-icon name="lock" [size]="11" /></span> encrypted
+            (AES-256-GCM)
+          </li>
+        </ul>
+      </div>
+      <ul class="entities" role="list">
+        @for (entity of database.schema; track entity.name) {
+          <li class="entity">
+            <p class="entity__name">{{ entity.name }}</p>
+            <ul class="entity__columns" role="list">
+              @for (column of entity.columns; track column; let first = $first) {
+                <li [class.entity__column--encrypted]="isEncrypted(entity, column)">
+                  <span class="entity__column-name">{{ column }}</span>
+                  @if (first) {
+                    <span class="legend legend--pk">PK</span>
+                  } @else if (isEncrypted(entity, column)) {
+                    <span class="legend legend--enc" aria-label="encrypted" role="img">
+                      <app-icon name="lock" [size]="11" />
+                    </span>
+                  }
+                </li>
+              }
+            </ul>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <ul class="practices" role="list" aria-label="Database practices">
+      @for (practice of database.practices; track practice.title; let i = $index) {
+        <li appReveal [appRevealDelay]="(i % 4) * 60">
+          <app-feature-card
+            [icon]="practice.icon"
+            [title]="practice.title"
+            [description]="practice.description"
+          />
+        </li>
+      }
+    </ul>
+
+    <div class="snippets">
+      @for (snippet of database.snippets; track snippet.title; let i = $index) {
+        <div appReveal [appRevealDelay]="i * 90">
+          <app-code-block [snippet]="snippet" />
+        </div>
+      }
+    </div>
+  </div>
+</section>

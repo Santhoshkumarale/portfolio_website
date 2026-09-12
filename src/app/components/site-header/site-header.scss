@@ -1,0 +1,227 @@
+@use 'mixins' as *;
+
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header {
+  position: relative;
+  border-bottom: 1px solid transparent;
+  background: rgba(9, 11, 15, 0.55);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  transition:
+    background-color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
+
+  &--scrolled,
+  &--open {
+    background: rgba(9, 11, 15, 0.82);
+    border-bottom-color: var(--border);
+  }
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: var(--header-h);
+}
+
+// Brand -------------------------------------------------------------------
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: 0;
+  margin-right: auto;
+  padding-block: 0.4rem;
+}
+
+.brand__mark {
+  display: grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: var(--radius-xs);
+  background: linear-gradient(135deg, var(--accent-soft), rgba(92, 200, 255, 0.12));
+  border: 1px solid var(--accent-border);
+  color: var(--accent-strong);
+  flex-shrink: 0;
+}
+
+.brand__text {
+  display: grid;
+  line-height: 1.15;
+  min-width: 0;
+}
+
+.brand__name {
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  color: var(--text-0);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.brand__role {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+// Desktop nav -------------------------------------------------------------
+
+.nav {
+  display: none;
+
+  @include up('lg') {
+    display: block;
+  }
+}
+
+.nav__list {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.nav__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.7rem;
+  border-radius: var(--radius-xs);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-2);
+  transition: color var(--dur-fast) var(--ease-out);
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0.7rem;
+    right: 0.7rem;
+    bottom: 0.2rem;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur) var(--ease-out);
+  }
+
+  &:hover {
+    color: var(--text-0);
+  }
+
+  &--active {
+    color: var(--text-0);
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+
+  @include up('xl') {
+    padding-inline: 0.85rem;
+  }
+}
+
+.header__actions {
+  display: none;
+
+  @include up('lg') {
+    display: flex;
+  }
+}
+
+// Mobile ------------------------------------------------------------------
+
+.menu-toggle {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-0);
+
+  @include up('lg') {
+    display: none;
+  }
+}
+
+.mobile {
+  position: absolute;
+  inset: 100% 0 auto 0;
+  max-height: calc(100dvh - var(--header-h));
+  overflow-y: auto;
+  padding: 0.75rem var(--gutter) 1.5rem;
+  background: rgba(9, 11, 15, 0.96);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+
+  @include motion-safe {
+    animation: slide-down var(--dur) var(--ease-out);
+  }
+
+  @include up('lg') {
+    display: none;
+  }
+}
+
+.mobile__list {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.mobile__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-md);
+  font-weight: 500;
+  color: var(--text-1);
+
+  app-icon {
+    color: var(--text-2);
+  }
+
+  &:hover,
+  &--active {
+    background: var(--surface);
+    color: var(--text-0);
+  }
+}
+
+.mobile__footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+
+  app-button {
+    width: 100%;
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
